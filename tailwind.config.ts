@@ -58,6 +58,7 @@ export default {
 			},
 			animation: {
 				spotlight: "spotlight 2s ease .75s 1 forwards",
+				"fade-up": "fade-up 0.5s ease-out",
 			},
 			keyframes: {
 				spotlight: {
@@ -68,6 +69,16 @@ export default {
 					"100%": {
 						opacity: '1',
 						transform: "translate(-50%,-40%) scale(1)",
+					},
+				},
+				"fade-up": {
+					"0%": {
+						opacity: "0",
+						transform: "translateY(10px)",
+					},
+					"100%": {
+						opacity: "1",
+						transform: "translateY(0)",
 					},
 				},
 			},

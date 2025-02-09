@@ -30,7 +30,7 @@ function Features() {
     ];
 
     return (
-        <div className="h-screen bg-background text-foreground">
+        <div className="bg-background text-foreground">
             <div className="container mx-auto px-4">
                 <div className="text-center mb-16">
                     <h2 className="text-4xl font-bold bg-clip-text text-transparent bg-gradient-to-b from-neutral-50 to-neutral-400 bg-opacity-50">Powerful Features for Modern API Testing</h2>

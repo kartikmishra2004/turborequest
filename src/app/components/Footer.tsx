@@ -5,7 +5,7 @@ import Image from "next/image"
 export default function Footer() {
     return (
         <footer className="border-t">
-            <div className="container flex flex-col gap-8 py-8 md:flex-row md:py-12 px-24">
+            <div className="flex flex-col gap-8 py-8 md:flex-row md:py-12 px-24">
                 <div className="flex-1 space-y-6">
                     <div className="flex gap-2 items-center">
                         <span><Image className="invert" src='/logo.png' alt="logo" width={30} height={30} /></span>
@@ -82,7 +82,7 @@ export default function Footer() {
                     </div>
                 </div>
             </div>
-            <div className="container border-t py-6">
+            <div className="border-t py-6">
                 <p className="text-center text-sm text-muted-foreground">
                     © {new Date().getFullYear()} Turbo Request, Inc. All rights reserved.
                 </p>
