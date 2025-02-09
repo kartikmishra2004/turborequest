@@ -9,7 +9,7 @@ export default function Screen() {
             <ContainerScroll
                 titleComponent={
                     <>
-                        <h1 className="font-normal text-base text-muted-foreground max-w-lg text-center mx-auto">
+                        <h1 className="font-normal text-4xl text-muted-foreground max-w-lg text-center mx-auto">
                             Test APIs Effortlessly, Debug<br />
                             <span className="text-[6rem] font-bold mt-1 leading-none bg-clip-text text-transparent bg-gradient-to-b from-neutral-50 to-neutral-400 bg-opacity-50">
                                 Seamlessly!
