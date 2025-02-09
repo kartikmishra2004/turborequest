@@ -13,7 +13,7 @@ interface NavItem {
 
 const navItems: NavItem[] = [
     { name: "Home", href: "/" },
-    { name: "API Sandbox", href: "/api" },
+    { name: "API Sandbox", href: "/api-sandbox" },
     { name: "Docs", href: "/docs" },
     { name: "About Us", href: "/about" },
 ];
@@ -24,9 +24,9 @@ export default function Navbar() {
 
     return (
         <header className="fixed lg:block hidden px-24 top-0 z-50 w-full border-b border-border/40 bg-background/95 backdrop-blur supports-[backdrop-filter]:bg-background/60">
-            <div className="container flex h-20 max-w-screen-2xl items-center">
+            <div className="container flex h-14 max-w-screen-2xl items-center">
                 <Link href='/' className="mr-6 flex items-center space-x-2">
-                    <span><Image className="invert opacity-95" src='/logo.png' alt="logo" width={25} height={25} /></span>
+                    <span><Image className="invert" src='/logo.png' alt="logo" width={35} height={35} /></span>
                 </Link>
                 <nav className="flex flex-1 justify-center items-center space-x-10 text-sm font-medium">
                     {navItems.map((item) => (
@@ -42,7 +42,7 @@ export default function Navbar() {
                             <span className="sr-only">GitHub</span>
                         </Button>
                     </Link>
-                    <Link href='/contact'>
+                    <Link href='/login'>
                         <Button size="sm">Login</Button>
                     </Link>
                     <Link href='/contact'>
