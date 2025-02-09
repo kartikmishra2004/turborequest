@@ -26,7 +26,7 @@ export default function Navbar() {
         <header className="fixed lg:block hidden px-24 top-0 z-50 w-full border-b border-border/40 bg-background/95 backdrop-blur supports-[backdrop-filter]:bg-background/60">
             <div className="container flex h-14 max-w-screen-2xl items-center">
                 <Link href='/' className="mr-6 flex items-center space-x-2">
-                    <span><Image className="invert" src='/logo.png' alt="logo" width={35} height={35} /></span>
+                    <span><Image className="invert" src='/logo.png' alt="logo" width={30} height={30} /></span>
                 </Link>
                 <nav className="flex flex-1 justify-center items-center space-x-10 text-sm font-medium">
                     {navItems.map((item) => (
