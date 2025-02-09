@@ -1,10 +1,9 @@
-import { Button } from "@/components/ui/button"
+import Hero from '@/app/components/Hero';
 
 export default function Home() {
   return (
-    <main className="flex justify-center items-center gap-2 flex-col max-w-xl mx-auto min-h-screen">
-      Hello!!
-      <Button variant="default">Button</Button>
+    <main className="">
+      <Hero />
     </main>
   );
 }

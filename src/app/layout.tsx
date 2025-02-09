@@ -13,7 +13,7 @@ const geistMono = Geist_Mono({
 });
 
 export const metadata: Metadata = {
-  title: "TurboRequest – The Ultimate API Testing Tool",
+  title: "Turbo Request – The Ultimate API Testing Tool",
   description: "TurboRequest is a fast and intuitive API testing platform for developers. Send, test, debug, and automate API requests for REST, GraphQL, and WebSockets."
 };
 
