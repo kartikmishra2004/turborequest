@@ -1,36 +1,13 @@
-"use client"
 import Hero from '@/app/components/Hero';
 import Features from '@/app/components/Features';
 import Screen from '@/app/components/Screen';
-import { useEffect } from 'react';
-import Lenis from "@studio-freight/lenis";
+import SmoothScroll from '@/components/ui/smooth-scroll';
 
 export default function Home() {
 
-  useEffect(() => {
-    window.scrollTo({ top: 0, behavior: "smooth" });
-  }, [])
-
-  useEffect(() => {
-    const lenis = new Lenis({
-      duration: 1.5,
-      easing: (t: number) => Math.min(1, 1.001 - Math.pow(2, -10 * t)),
-    });
-
-    function raf(time: number) {
-      lenis.raf(time);
-      requestAnimationFrame(raf);
-    }
-
-    requestAnimationFrame(raf);
-
-    return () => {
-      lenis.destroy();
-    };
-  }, []);
-
   return (
-    <section className="h-[200vh]">
+    <section className="">
+      <SmoothScroll />
       <Hero />
       <Features />
       <Screen />
