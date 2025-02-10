@@ -25,8 +25,8 @@ function NotFound() {
                 </h2>
 
                 <p className="text-gray-400 mb-8 max-w-md mx-auto">
-                    The page you're looking for seems to have vanished into the digital void.
-                    Don't worry though, you can find your way back home.
+                    The page you&apos;re looking for seems to have vanished into the digital void.
+                    Don&apos;t worry though, you can find your way back home.
                 </p>
 
                 <div className="flex flex-col sm:flex-row gap-4 justify-center">

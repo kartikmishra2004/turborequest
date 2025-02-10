@@ -6,7 +6,7 @@ import { CodeBlock } from "@/components/ui/code-block";
 
 export default function CodeBlockDemo() {
 
-  const [response, setResponse] = useState({});
+  // const [response, setResponse] = useState({});
 
   const handleRunCode = async () => {
     try {
@@ -18,7 +18,7 @@ export default function CodeBlockDemo() {
         body: JSON.stringify({ test: true }),
       });
       const resp = await response.json();
-      setResponse(resp);
+      console.log(resp);
     } catch (error) {
       console.log("Error fetching data from the dummy API!!", error);
     }
