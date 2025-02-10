@@ -67,6 +67,7 @@ body {
   * {
     @apply border-border;
   }
+
   body {
     @apply bg-background text-foreground;
   }
@@ -89,9 +90,11 @@ body {
   0% {
     transform: translateY(0px);
   }
+
   50% {
     transform: translateY(-20px);
   }
+
   100% {
     transform: translateY(0px);
   }
@@ -99,4 +102,27 @@ body {
 
 .animate-float {
   animation: float 6s ease-in-out infinite;
+}
+
+@layer utilities {
+  .text-gradient {
+    background: linear-gradient(to right bottom, rgb(255, 255, 255) 30%, rgba(255, 255, 255, 0.38));
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+  }
+
+  .mask-radial-faded {
+    mask-image: radial-gradient(circle at center center, black, transparent 80%)
+  }
+
+  .glass-effect {
+    @apply backdrop-blur-[12px] bg-white/10 border border-white/10;
+    box-shadow: 0 4px 12px -2px rgba(0, 0, 0, 0.3);
+  }
+}
+
+.spotlight {
+  background: radial-gradient(circle at center, rgba(255, 255, 255, 0.8) 0%, transparent 100%);
+  pointer-events: none;
 }

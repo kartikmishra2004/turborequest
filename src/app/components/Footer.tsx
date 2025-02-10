@@ -18,23 +18,23 @@ export default function Footer() {
                         <h3 className="text-sm font-medium">Docs</h3>
                         <ul className="space-y-3 text-sm">
                             <li>
-                                <Link href="/" className="text-muted-foreground transition-colors hover:text-primary">
-                                    Docs 1
+                                <Link href="/docs/api" className="text-muted-foreground transition-colors hover:text-primary">
+                                    What is API?
                                 </Link>
                             </li>
                             <li>
-                                <Link href="/" className="text-muted-foreground transition-colors hover:text-primary">
-                                    Docs 2
+                                <Link href="/docs/rest-api" className="text-muted-foreground transition-colors hover:text-primary">
+                                    REST API
                                 </Link>
                             </li>
                             <li>
-                                <Link href="/" className="text-muted-foreground transition-colors hover:text-primary">
-                                    Docs 3
+                                <Link href="/docs/graphql" className="text-muted-foreground transition-colors hover:text-primary">
+                                    GraphQL
                                 </Link>
                             </li>
                             <li>
-                                <Link href="/" className="text-muted-foreground transition-colors hover:text-primary">
-                                    Docs 4
+                                <Link href="/docs/websocket" className="text-muted-foreground transition-colors hover:text-primary">
+                                    WebSocket
                                 </Link>
                             </li>
                         </ul>

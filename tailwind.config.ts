@@ -8,6 +8,13 @@ export default {
 		"./src/app/**/*.{js,ts,jsx,tsx,mdx}",
 	],
 	theme: {
+		container: {
+			center: true,
+			padding: "2rem",
+			screens: {
+				"2xl": "1400px",
+			},
+		},
 		extend: {
 			colors: {
 				background: 'hsl(var(--background))',
@@ -59,6 +66,10 @@ export default {
 			animation: {
 				spotlight: "spotlight 2s ease .75s 1 forwards",
 				"fade-up": "fade-up 0.5s ease-out",
+				"accordion-down": "accordion-down 0.2s ease-out",
+				"accordion-up": "accordion-up 0.2s ease-out",
+				float: "float 6s ease-in-out infinite",
+				shimmer: "shimmer 2s linear infinite",
 			},
 			keyframes: {
 				spotlight: {
@@ -80,6 +91,22 @@ export default {
 						opacity: "1",
 						transform: "translateY(0)",
 					},
+				},
+				"accordion-down": {
+					from: { height: "0" },
+					to: { height: "var(--radix-accordion-content-height)" },
+				},
+				"accordion-up": {
+					from: { height: "var(--radix-accordion-content-height)" },
+					to: { height: "0" },
+				},
+				float: {
+					"0%, 100%": { transform: "translateY(0)" },
+					"50%": { transform: "translateY(-10px)" },
+				},
+				shimmer: {
+					from: { backgroundPosition: "0 0" },
+					to: { backgroundPosition: "-200% 0" },
 				},
 			},
 		}
