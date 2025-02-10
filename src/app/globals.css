@@ -115,11 +115,6 @@ body {
   .mask-radial-faded {
     mask-image: radial-gradient(circle at center center, black, transparent 80%)
   }
-
-  .glass-effect {
-    @apply backdrop-blur-[12px] bg-white/10 border border-white/10;
-    box-shadow: 0 4px 12px -2px rgba(0, 0, 0, 0.3);
-  }
 }
 
 .spotlight {

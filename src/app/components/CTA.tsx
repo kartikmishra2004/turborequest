@@ -23,7 +23,7 @@ export default function CTA() {
                     <Button size="lg">
                         Start Testing Now
                     </Button>
-                    <Button size="lg" variant="outline">
+                    <Button size="lg" variant="outline" className="border-white/10">
                         View Docs
                     </Button>
                 </motion.div>
