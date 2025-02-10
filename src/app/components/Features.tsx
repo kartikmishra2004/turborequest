@@ -1,5 +1,8 @@
+"use client"
+import { useState } from "react";
+import { Card } from "@/components/ui/card";
+import { Badge } from "@/components/ui/badge";
 import { Zap, Shield, Workflow, BarChart3 } from "lucide-react";
-import FeatureCard from "@/app/components/FeatureCard";
 
 function Features() {
     const features = [
@@ -45,6 +48,63 @@ function Features() {
                 </div>
             </div>
         </div>
+    );
+}
+
+function FeatureCard({
+    icon: Icon,
+    title,
+    description,
+    badges
+}: {
+    icon: React.ElementType;
+    title: string;
+    description: string;
+    badges: string[];
+}) {
+    const [transform, setTransform] = useState({ x: 0, y: 0, scale: 1 });
+
+    const handleMouseMove = (e: React.MouseEvent<HTMLDivElement>) => {
+        const card = e.currentTarget;
+        const rect = card.getBoundingClientRect();
+        const x = e.clientX - rect.left;
+        const y = e.clientY - rect.top;
+
+        const centerX = rect.width / 2;
+        const centerY = rect.height / 2;
+
+        const rotateX = (y - centerY) / 20;
+        const rotateY = (centerX - x) / 20;
+
+        setTransform({ x: rotateY, y: rotateX, scale: 1.02 });
+    };
+
+    const handleMouseLeave = () => {
+        setTransform({ x: 0, y: 0, scale: 1 });
+    };
+
+    return (
+        <Card className="relative overflow-hidden group p-6 py-10 transition-all duration-300 ease-out hover:shadow-lg hover:shadow-primary/5 hover:border-primary/20 transform-gpu" style={{ transform: `perspective(1000px) rotateX(${transform.y}deg) rotateY(${transform.x}deg) scale(${transform.scale})`, transition: 'all 0.3s ease-out' }} onMouseMove={handleMouseMove} onMouseLeave={handleMouseLeave}>
+            <div className="absolute inset-0 bg-gradient-to-br from-primary/5 via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-opacity" style={{ transform: `translateZ(20px)`, }} />
+            <div className="relative z-10" style={{ transform: `translateZ(50px)`, transformStyle: 'preserve-3d' }}>
+                <div className="mb-4 inline-block p-3 bg-primary/10 rounded-xl transition-transform duration-300 ease-out group-hover:scale-110">
+                    <Icon className="w-6 h-6 text-primary" />
+                </div>
+                <h3 className="text-xl font-semibold mb-2 text-foreground transition-transform duration-300 ease-out group-hover:translate-y-[-2px]">
+                    {title}
+                </h3>
+                <p className="text-muted-foreground mb-4 transition-transform duration-300 ease-out group-hover:translate-y-[-1px]">
+                    {description}
+                </p>
+                <div className="flex flex-wrap gap-2 transition-transform duration-300 ease-out group-hover:translate-y-[-1px]">
+                    {badges.map((badge) => (
+                        <Badge key={badge} variant="secondary" className="bg-secondary/50 transition-transform duration-300 ease-out hover:scale-105">
+                            {badge}
+                        </Badge>
+                    ))}
+                </div>
+            </div>
+        </Card>
     );
 }
 
