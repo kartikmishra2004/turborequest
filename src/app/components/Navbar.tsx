@@ -14,7 +14,6 @@ interface NavItem {
 const navItems: NavItem[] = [
     { name: "Home", href: "/" },
     { name: "API Sandbox", href: "/api-sandbox" },
-    { name: "Playground", href: "/playground" },
     { name: "Docs", href: "/docs" },
     { name: "About Us", href: "/about" },
 ];

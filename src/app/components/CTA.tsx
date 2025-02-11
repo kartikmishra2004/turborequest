@@ -2,6 +2,7 @@
 import { Button } from "@/components/ui/button";
 import { motion } from "framer-motion";
 import CodeBlockDemo from '@/app/components/CodeBlock'
+import Link from "next/link";
 
 export default function CTA() {
     return (
@@ -20,12 +21,16 @@ export default function CTA() {
                 <motion.p initial={{ opacity: 0, y: 20 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true }} transition={{ duration: 0.5, delay: 0.3 }} className="text-lg md:text-xl text-muted-foreground mb-12 max-w-2xl mx-auto">Powerful, intuitive API testing platform for developers. Build, test, and deploy with ease.
                 </motion.p>
                 <motion.div initial={{ opacity: 0, y: 20 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true }} transition={{ duration: 0.5, delay: 0.4 }} className="flex flex-wrap gap-4 justify-center mb-16" >
-                    <Button size="lg">
-                        Start Testing Now
-                    </Button>
-                    <Button size="lg" variant="outline" className="border-white/10">
-                        View Docs
-                    </Button>
+                    <Link href='/api-sandbox'>
+                        <Button size="lg">
+                            Start Testing Now
+                        </Button>
+                    </Link>
+                    <Link href='/docs'>
+                        <Button size="lg" variant="outline" className="border-white/10">
+                            View Docs
+                        </Button>
+                    </Link>
                 </motion.div>
                 <motion.div initial={{ opacity: 0, y: 20 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true }} transition={{ duration: 0.5, delay: 0.5 }} className="animate-float">
                     <CodeBlockDemo />
