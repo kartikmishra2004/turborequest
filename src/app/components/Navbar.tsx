@@ -42,7 +42,7 @@ export default function Navbar() {
                             <span className="sr-only">GitHub</span>
                         </Button>
                     </Link>
-                    <Link href='/login'>
+                    <Link href='/auth/login'>
                         <Button size="sm">Login</Button>
                     </Link>
                     <Link href='/contact'>
