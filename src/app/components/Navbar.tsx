@@ -3,8 +3,8 @@ import Image from "next/image";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { Button } from "@/components/ui/button";
-import { Github } from 'lucide-react';
-
+import { Github } from "lucide-react";
+import { useSession, signIn, signOut } from "next-auth/react";
 
 interface NavItem {
     name: string;
@@ -21,6 +21,7 @@ const navItems: NavItem[] = [
 export default function Navbar() {
 
     const pathname = usePathname();
+    const { data: session, status } = useSession();
 
     return (
         <header className="fixed lg:px-24 px-3 top-0 z-50 w-full border-b border-border/40 bg-background/95 backdrop-blur supports-[backdrop-filter]:bg-background/60">
@@ -36,15 +37,14 @@ export default function Navbar() {
                     ))}
                 </nav>
                 <div className="flex items-center space-x-4">
-                    <Link href="https://github.com/kartikmishra2004/turborequest" target="_blank" rel="noreferrer">
-                        <Button variant="ghost" size="icon">
-                            <Github className="h-4 w-4" />
-                            <span className="sr-only">GitHub</span>
-                        </Button>
-                    </Link>
-                    <Link href='/auth/login'>
-                        <Button size="sm">Login</Button>
-                    </Link>
+                    {status === 'loading' ? <Button size="sm" ><div className="loader mx-[18px]"></div></Button > :
+                        ((session ?
+                            (
+                                <Button onClick={() => signOut()} size="sm" ><span><Github /></span>Logout</Button >
+                            ) : (
+                                <Button onClick={() => signIn('github', { redirect: false })} size="sm" ><span><Github /></span>Login</Button >
+                            )
+                        ))}
                     <Link href='/contact'>
                         <Button variant='outline' size="sm">Contact</Button>
                     </Link>

@@ -6,7 +6,7 @@ import Link from "next/link";
 
 export default function CTA() {
     return (
-        <div className="relative min-h-screen flex flex-col items-center justify-center px-4 py-20 pb-28">
+        <div className="relative min-h-screen flex flex-col items-center justify-center px-4 pb-28">
             <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-full h-full max-w-7xl">
                 <div className="absolute top-1/2 left-1/2 h-[40rem] w-[40rem] -translate-x-1/2 -translate-y-1/2 rounded-full spotlight opacity-20 blur-xl" />
             </div>
