@@ -26,25 +26,24 @@ export default function CodeBlockDemo() {
 
   useEffect(() => {
     handleRunCode();
-  }, [])
+  }, []);
 
   const code = `// Get started with APIs using a dummy API
-const url = "https://turborequest.vercel.app/api/dummy";
-const response = await fetch(url, {
-  method: 'POST',
-  headers: {
-    'Content-Type': 'application/json'
-  },
-  body: JSON.stringify({ test: true })
-});
-
-// Get instant results
-console.log(response.status); // 200
-console.log(response.data);   // { success: true, message: "Dummy API response" }`;
+fetch("https://turborequest.vercel.app/api/dummy", {
+    method: 'POST',
+    headers: {
+        'Content-Type': 'application/json'
+    },
+    body: JSON.stringify({ test: true })
+})
+    // Get instant results
+    .then(response => response.json())
+    .then(data => console.log(data)) // { success: true, message: "Dummy API response" }
+    .catch(error => console.error(error));`;
 
   return (
     <div className="max-w-3xl mx-auto w-full">
-      <CodeBlock language="jsx" filename="Sample.jsx" highlightLines={[12, 13]} code={code} />
+      <CodeBlock language="jsx" filename="Sample.jsx" highlightLines={[11]} code={code} />
     </div>
   );
 }
