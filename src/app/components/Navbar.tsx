@@ -4,6 +4,8 @@ import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { Button } from "@/components/ui/button";
 import { useSession, signOut } from "next-auth/react";
+import { useState } from "react";
+import { Power } from "lucide-react";
 
 interface NavItem {
     name: string;
@@ -19,12 +21,13 @@ const navItems: NavItem[] = [
 
 export default function Navbar() {
 
+    const [showDD, setShowDD] = useState(false)
+
     const pathname = usePathname();
     const { data: session } = useSession();
-
     return (
         <header className="fixed lg:px-24 px-3 top-0 z-50 w-full border-b border-border/40 bg-background/95 backdrop-blur supports-[backdrop-filter]:bg-background/60">
-            <div className="container flex h-14 max-w-screen-2xl items-center">
+            <div className="container flex h-16 max-w-screen-2xl items-center">
                 <Link href='/' className="mr-6 flex items-center space-x-2">
                     <span><Image className="invert" src='/logo.png' alt="logo" width={30} height={30} /></span>
                 </Link>
@@ -39,7 +42,21 @@ export default function Navbar() {
                     {!session ?
                         <Link href='/auth/login'>
                             <Button size="sm" >Login</Button >
-                        </Link> : <Button onClick={() => signOut()} size="sm">Logout</Button>}
+                        </Link> :
+                        <div className="w-max relative">
+                            <Button onClick={() => setShowDD(!showDD)} size='sm' variant='secondary'>
+                                <Image unoptimized src={session.user?.image || ''} width={20} height={20} className="rounded-full" alt="pfp" />
+                                {session.user?.name}
+                            </Button>
+                            {
+                                showDD && <div className="w-full flex justify-center items-center h-20 bg-zinc-950 absolute border rounded-md top-10">
+                                    <Button onClick={() => signOut()} size='sm' variant='destructive'>
+                                        <Power />Logout
+                                    </Button>
+                                </div>
+                            }
+                        </div>
+                    }
                     <Link href='/contact'>
                         <Button variant='outline' size="sm">Contact</Button>
                     </Link>
