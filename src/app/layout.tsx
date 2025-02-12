@@ -4,23 +4,29 @@ import Navbar from '@/app/components/Navbar'
 import Footer from "@/app/components/Footer";
 import MobileWarning from "@/app/components/MobileWarning";
 import SessionWrapper from "@/app/components/SessionWrapper";
+import { auth } from "@/auth";
+
 
 export const metadata: Metadata = {
   title: "Turbo Request – The Ultimate API Testing Tool",
   description: "TurboRequest is a fast and intuitive API testing platform for developers. Send, test, debug, and automate API requests for REST, GraphQL, and WebSockets."
 };
 
-export default function RootLayout({
+export default async function RootLayout({
   children,
 }: Readonly<{
   children: React.ReactNode;
 }>) {
+
+
+  const session = await auth();
+
   return (
     <html className="dark" lang="en">
       <SessionWrapper>
         <body className={`antialiased`}>
           <main className='hidden md:block'>
-            <Navbar />
+            <Navbar session={session} />
             {children}
             <Footer />
           </main>
