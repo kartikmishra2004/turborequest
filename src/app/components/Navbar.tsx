@@ -3,8 +3,7 @@ import Image from "next/image";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { Button } from "@/components/ui/button";
-import { Github } from "lucide-react";
-import { useSession, signIn, signOut } from "next-auth/react";
+import { useSession, signOut } from "next-auth/react";
 
 interface NavItem {
     name: string;
@@ -21,7 +20,7 @@ const navItems: NavItem[] = [
 export default function Navbar() {
 
     const pathname = usePathname();
-    const { data: session, status } = useSession();
+    const { data: session } = useSession();
 
     return (
         <header className="fixed lg:px-24 px-3 top-0 z-50 w-full border-b border-border/40 bg-background/95 backdrop-blur supports-[backdrop-filter]:bg-background/60">
@@ -37,14 +36,10 @@ export default function Navbar() {
                     ))}
                 </nav>
                 <div className="flex items-center space-x-4">
-                    {status === 'loading' ? <Button size="sm" ><div className="loader mx-[18px]"></div></Button > :
-                        ((session ?
-                            (
-                                <Button onClick={() => signOut()} size="sm" ><span><Github /></span>Logout</Button >
-                            ) : (
-                                <Button onClick={() => signIn('github', { redirect: false })} size="sm" ><span><Github /></span>Login</Button >
-                            )
-                        ))}
+                    {!session ?
+                        <Link href='/auth/login'>
+                            <Button size="sm" >Login</Button >
+                        </Link> : <Button onClick={() => signOut()} size="sm">Logout</Button>}
                     <Link href='/contact'>
                         <Button variant='outline' size="sm">Contact</Button>
                     </Link>
