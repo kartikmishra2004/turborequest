@@ -5,6 +5,7 @@ import Footer from "@/app/components/Footer";
 import MobileWarning from "@/app/components/MobileWarning";
 import SessionWrapper from "@/app/components/SessionWrapper";
 import { auth } from "@/auth";
+import SmoothScroll from "@/components/ui/smooth-scroll";
 
 
 export const metadata: Metadata = {
@@ -26,6 +27,7 @@ export default async function RootLayout({
       <SessionWrapper>
         <body className={`antialiased`}>
           <main className='hidden md:block'>
+            <SmoothScroll />
             <Navbar session={session} />
             {children}
             <Footer />
