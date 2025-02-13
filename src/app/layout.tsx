@@ -5,7 +5,6 @@ import Footer from "@/app/components/Footer";
 import MobileWarning from "@/app/components/MobileWarning";
 import SessionWrapper from "@/app/components/SessionWrapper";
 import { auth } from "@/auth";
-import SmoothScroll from "@/components/ui/smooth-scroll";
 
 export const metadata: Metadata = {
   title: "Turbo Request – The Ultimate API Testing Tool",
@@ -19,7 +18,6 @@ export default async function RootLayout({ children }: Readonly<{ children: Reac
       <SessionWrapper>
         <body className={`antialiased`}>
           <main className='hidden md:block'>
-            <SmoothScroll />
             <Navbar session={session} />
             {children}
             <Footer />
