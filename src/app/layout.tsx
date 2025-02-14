@@ -4,7 +4,6 @@ import Navbar from '@/app/components/Navbar'
 import Footer from "@/app/components/Footer";
 import MobileWarning from "@/app/components/MobileWarning";
 import SessionWrapper from "@/app/components/SessionWrapper";
-import { auth } from "@/auth";
 
 export const metadata: Metadata = {
   title: "Turbo Request – The Ultimate API Testing Tool",
