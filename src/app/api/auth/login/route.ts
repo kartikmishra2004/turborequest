@@ -15,7 +15,7 @@ export async function POST(request: NextRequest) {
         }
         await UserModel.insertOne({ email, fullName, photoURL });
         return NextResponse.json({ message: "Login successful!!" }, { status: 201 });
-    } catch (error) {
+    } catch {
         return NextResponse.json({ error: "Failed to login" }, { status: 500 });
     }
 }

@@ -1,4 +1,4 @@
-import mongoose, { Schema, Document, Types, Collection } from "mongoose";
+import mongoose, { Schema, Document, Collection } from "mongoose";
 
 export interface Request extends Document {
     type: string;
