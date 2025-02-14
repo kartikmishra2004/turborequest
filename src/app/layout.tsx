@@ -12,13 +12,13 @@ export const metadata: Metadata = {
 };
 
 export default async function RootLayout({ children }: Readonly<{ children: React.ReactNode; }>) {
-  const session = await auth();
+  const session = auth();
   return (
     <html className="dark" lang="en">
       <SessionWrapper>
         <body className={`antialiased`}>
           <main className='hidden md:block'>
-            <Navbar session={session} />
+            <Navbar session={await session} />
             {children}
             <Footer />
           </main>
