@@ -17,7 +17,7 @@ export default async function RootLayout({ children }: Readonly<{ children: Reac
     <html className="dark" lang="en">
       <SessionWrapper>
         <body className={`antialiased`}>
-          <main className='hidden md:block min-h-screen'>
+          <main className='hidden md:block'>
             <Navbar session={session} />
             {children}
             <Footer />

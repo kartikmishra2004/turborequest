@@ -5,9 +5,16 @@ import CTA from "@/app/components/CTA"
 import { auth } from '@/auth';
 
 export default async function Home() {
-  await auth();
+  const session = await auth();
+  if (!session) {
+    return (
+      <div className="flex min-h-screen items-center justify-center">
+        <div className="animate-spin rounded-full h-12 w-12 border-t-2 border-foreground"></div>
+      </div>
+    );
+  }
   return (
-    <section className='min-h-screen'>
+    <section>
       <Hero />
       <Features />
       <Screen />
