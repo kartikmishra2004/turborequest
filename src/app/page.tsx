@@ -6,7 +6,7 @@ import CTA from "@/app/components/CTA"
 export default function Home() {
 
   return (
-    <section>
+    <section className='min-h-screen'>
       <Hero />
       <Features />
       <Screen />
