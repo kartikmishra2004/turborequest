@@ -6,7 +6,7 @@ export interface Request extends Document {
     URL: string;
     params: Record<string, string>;
     header: Record<string, string>;
-    body: Record<string, any>;
+    body: string | Record<string, unknown> | Array<unknown> | null;
 }
 
 const RequestSchema: Schema<Request> = new Schema({
