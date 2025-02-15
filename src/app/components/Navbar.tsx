@@ -5,6 +5,7 @@ import { usePathname } from "next/navigation";
 import { Button } from "@/components/ui/button";
 import { Session } from "next-auth";
 import Logout from "@/app/components/Logout";
+import WelcomeBar from "@/app/components/WelcomeBar";
 
 interface NavItem {
     name: string;
@@ -27,12 +28,13 @@ export default function Navbar({ session }: NavbarProps) {
     const pathname = usePathname();
     return (
         <>
-            <header className="fixed lg:px-24 px-3 top-0 z-50 w-full border-b border-border/40 bg-background/95 backdrop-blur supports-[backdrop-filter]:bg-background/60">
-                <div className="container flex h-16 max-w-screen-2xl items-center">
+            <header className="fixed top-0 z-50 w-full border-b border-border/40 bg-background/95 backdrop-blur supports-[backdrop-filter]:bg-background/60">
+                {session && <WelcomeBar />}
+                <div className="container lg:px-24 px-3 flex h-16 max-w-screen-2xl items-center">
                     <Link href='/' className="mr-6 flex items-center space-x-2">
                         <span><Image className="invert" src='/logo.png' alt="logo" width={30} height={30} /></span>
                     </Link>
-                    <nav className="flex flex-1 justify-center items-center space-x-10 text-sm font-medium">
+                    <nav className={`flex ${session ? 'lg:ml-[7rem] ml-0' : ''} flex-1 justify-center items-center space-x-10 text-sm font-medium`}>
                         {navItems.map((item) => (
                             <Link key={item.name} href={item.href} className={`transition-colors tracking-wider lg:text-sm text-xs ${pathname === item.href ? 'text-primary' : 'text-muted-foreground'} hover:text-primary`}>
                                 {item.name}
