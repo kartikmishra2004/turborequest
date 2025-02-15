@@ -3,7 +3,7 @@ import Features from '@/app/components/Features';
 import Screen from '@/app/components/Screen';
 import CTA from "@/app/components/CTA"
 
-export default async function Home() {
+export default function Home() {
   return (
     <section>
       <Hero />  

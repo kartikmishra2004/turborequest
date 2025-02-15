@@ -3,8 +3,8 @@ import Image from "next/image";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { Button } from "@/components/ui/button";
+import { Session } from "next-auth";
 import Logout from "@/app/components/Logout";
-import { useSession } from "next-auth/react";
 
 interface NavItem {
     name: string;
@@ -18,8 +18,12 @@ const navItems: NavItem[] = [
     { name: "About Us", href: "/about" },
 ];
 
-export default function Navbar() {
-    const { data: session } = useSession()
+interface NavbarProps {
+    session?: Partial<Session> | null,
+}
+
+export default function Navbar({ session }: NavbarProps) {
+
     const pathname = usePathname();
     return (
         <>
