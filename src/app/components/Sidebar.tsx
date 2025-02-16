@@ -64,7 +64,7 @@ const FileItem = ({ node, level = 0 }: { node: FileNode; level?: number }) => {
 
 export default function Sidebar() {
     return (
-        <aside className="w-64 border-r h-[calc(100vh-3.5rem)] bg-background/95 backdrop-blur supports-[backdrop-filter]:bg-background/60">
+        <aside className="w-64 border-r max-h-[calc(100vh-3.5rem)] overflow-y-auto bg-background/95 backdrop-blur supports-[backdrop-filter]:bg-background/60">
             <div className="p-5">
                 <div className="font-medium mb-2">Collections</div>
                 {demoFiles.map((file) => (

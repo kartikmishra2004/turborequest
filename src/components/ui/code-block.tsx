@@ -9,11 +9,11 @@ type CodeBlockProps = {
   filename: string;
   highlightLines?: number[];
 } & (
-  | {
+    | {
       code: string;
       tabs?: never;
     }
-  | {
+    | {
       code?: never;
       tabs: Array<{
         name: string;
@@ -22,7 +22,7 @@ type CodeBlockProps = {
         highlightLines?: number[];
       }>;
     }
-);
+  );
 
 export const CodeBlock = ({
   language,
@@ -54,7 +54,7 @@ export const CodeBlock = ({
     : highlightLines;
 
   return (
-    <div className="relative w-full rounded-lg bg-zinc-900 border p-5 font-mono text-sm">
+    <div className="relative w-full rounded-lg bg-zinc-900 border p-5 max-h-[calc(100vh-14rem)] overflow-y-auto font-mono text-sm">
       <div className="flex flex-col gap-2">
         {tabsExist && (
           <div className="flex  overflow-x-auto">
@@ -62,11 +62,10 @@ export const CodeBlock = ({
               <button
                 key={index}
                 onClick={() => setActiveTab(index)}
-                className={`px-3 !py-2 text-xs transition-colors font-sans ${
-                  activeTab === index
-                    ? "text-white"
-                    : "text-zinc-400 hover:text-zinc-200"
-                }`}
+                className={`px-3 !py-2 text-xs transition-colors font-sans ${activeTab === index
+                  ? "text-white"
+                  : "text-zinc-400 hover:text-zinc-200"
+                  }`}
               >
                 {tab.name}
               </button>
