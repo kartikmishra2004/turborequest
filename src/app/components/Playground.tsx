@@ -12,8 +12,7 @@ import {
 import { cn } from "@/lib/utils";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { CodeBlock } from "@/components/ui/code-block";
-import CodeMirror, { EditorView } from "@uiw/react-codemirror";
-import { javascript } from "@codemirror/lang-javascript";
+import Editor from "@monaco-editor/react";
 
 const METHODS = [
     { value: "get", label: "GET" },
@@ -28,39 +27,45 @@ const PROTOCOLS = [
     { value: "graphql", label: "GraphQL" },
 ];
 
+const sampleBody = `{ 
+    "name": "Kartik", 
+    "age": 22
+}`
+
+const sampleResponse = `{
+    "expand": "attributes",
+    "link": {
+        "rel": "self",
+        "href": "http://localhost:8095/crowd/rest/usermanagement/1/user?username=my_username"
+    },
+    "name": "my_username",
+    "first-name": "My",
+    "last-name": "Username",
+    "display-name": "My Username",
+    "email": "user@example.test",
+    "password": {
+        "link": {
+            "rel": "edit",
+            "href": "http://localhost:8095/crowd/rest/usermanagement/1/user/password?username=my_username"
+        }
+    },
+    "active": true,
+    "attributes": {
+        "link": {
+            "rel": "self",
+            "href": "http://localhost:8095/crowd/rest/usermanagement/1/user/attribute?username=my_username"
+        },
+        "attributes": []
+    }
+}`
+
 export default function MainContent() {
     const [protocol, setProtocol] = useState("http");
     const [method, setMethod] = useState("get");
     const [url, setUrl] = useState("");
     const [activeTab, setActiveTab] = useState("params");
-    const [editCode, setEditCode] = useState("// Write your JavaScript code");
+    const [body, setBody] = useState(sampleBody);
 
-    const code = `{
-   "expand" : "attributes",
-   "link" : {
-      "rel" : "self",
-      "href" : "http://localhost:8095/crowd/rest/usermanagement/1/user?username=my_username"
-   },
-   "name" : "my_username",
-   "first-name" : "My",
-   "last-name" : "Username",
-   "display-name" : "My Username",
-   "email" : "user@example.test",
-   "password" : {
-      "link" : {
-         "rel" : "edit",
-         "href" : "http://localhost:8095/crowd/rest/usermanagement/1/user/password?username=my_username"
-      }
-   },
-   "active" : true,
-   "attributes" : {
-      "link" : {
-         "rel" : "self",
-         "href" : "http://localhost:8095/crowd/rest/usermanagement/1/user/attribute?username=my_username"
-      },
-      "attributes" : []
-   }
-}`
     return (
         <div className="flex-1 flex flex-col">
             {/* Main Content */}
@@ -166,19 +171,26 @@ export default function MainContent() {
                                     </div>
                                 </TabsContent>
                                 <TabsContent value="body" className="p-4">
-                                    <CodeMirror
-                                        value={editCode}
-                                        height='60vh'
-                                        extensions={[javascript()]}
-                                        onChange={(value) => setEditCode(value)}
-                                        theme='dark'
-                                    />
+                                    <div className="rounded-md overflow-hidden border">
+                                        <Editor
+                                            height="60vh"
+                                            defaultLanguage="json"
+                                            theme="vs-dark"
+                                            value={body}
+                                            onChange={(value) => setBody(value!)}
+                                            options={{
+                                                fontSize: 14,
+                                                minimap: { enabled: false },
+                                                scrollBeyondLastLine: false,
+                                            }}
+                                        />
+                                    </div>
                                 </TabsContent>
                             </Tabs>
                         </div>
                         <div className="p-4">
                             <h3 className="font-medium mb-3">Response</h3>
-                            <CodeBlock language="jsx" filename="Login.json" highlightLines={[11]} code={code} />
+                            <CodeBlock language="jsx" filename="Login.json" highlightLines={[]} code={sampleResponse} />
                         </div>
                     </div>
                 </div>

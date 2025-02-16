@@ -28,7 +28,7 @@ export default function Navbar({ session }: NavbarProps) {
     const pathname = usePathname();
     return (
         <>
-            <header className="fixed top-0 z-50 w-full border-b border-border/40 bg-background/95 backdrop-blur supports-[backdrop-filter]:bg-background/60">
+            <header className="fixed top-0 z-50 w-full border-b border-border bg-background/95 backdrop-blur supports-[backdrop-filter]:bg-background/60">
                 {session && pathname === '/' && <WelcomeBar />}
                 <div className="container lg:px-24 px-3 flex h-14 max-w-screen-2xl items-center">
                     <Link href='/' className="mr-6 flex items-center space-x-2">
