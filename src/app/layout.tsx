@@ -1,10 +1,10 @@
 import type { Metadata } from "next";
 import "./globals.css";
 import Navbar from '@/app/components/Navbar'
-import Footer from "@/app/components/Footer";
 import MobileWarning from "@/app/components/MobileWarning";
 import SessionWrapper from "@/app/components/SessionWrapper";
 import { auth } from "@/auth";
+import FooterWrapper from "@/components/ui/footer-wrapper";
 
 export const metadata: Metadata = {
   title: "Turbo Request – The Ultimate API Testing Tool",
@@ -20,7 +20,7 @@ export default async function RootLayout({ children }: Readonly<{ children: Reac
           <main className='hidden md:block'>
             <Navbar session={session} />
             {children}
-            <Footer />
+            <FooterWrapper />
           </main>
           <main className="block md:hidden">
             <MobileWarning />
