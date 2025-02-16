@@ -1,4 +1,6 @@
 import { Metadata } from "next";
+import Sidebar from "@/app/components/Sidebar";
+import PlayGround from "@/app/components/Playground";
 
 export const metadata: Metadata = {
     title: "Turbo Request – API Sandbox",
@@ -6,9 +8,9 @@ export const metadata: Metadata = {
 
 export default function API_Sandbox() {
     return (
-        <section className="min-h-screen flex justify-center items-center">
-            API Sandbox
+        <section className="flex pt-14">
+            <Sidebar />
+            <PlayGround />
         </section>
     );
-
 }
