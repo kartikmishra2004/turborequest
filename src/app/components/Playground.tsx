@@ -83,6 +83,7 @@ export default function MainContent() {
     const handleSend = () => {
         let data = formData;
         data.body = JSON.parse(data.body);
+        console.log(data);
     }
     return (
         <div className="flex-1 flex flex-col">

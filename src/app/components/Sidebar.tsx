@@ -12,7 +12,6 @@ import {
     DialogTitle,
     DialogTrigger,
 } from "@/components/ui/dialog"
-import { Label } from "@radix-ui/react-select";
 import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
 
@@ -97,9 +96,9 @@ export default function Sidebar() {
                             </DialogTrigger>
                             <DialogContent className="sm:max-w-[425px]">
                                 <DialogHeader>
-                                    <DialogTitle>Edit profile</DialogTitle>
+                                    <DialogTitle>Create collection</DialogTitle>
                                     <DialogDescription>
-                                        Make changes to your profile here. Click save when you're done.
+                                        Enter a name for your collection to organize your API requests.
                                     </DialogDescription>
                                 </DialogHeader>
                                 <div className="grid gap-4 py-4">
