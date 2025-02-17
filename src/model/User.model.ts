@@ -5,7 +5,7 @@ interface IRequest {
     method: string;
     URL: string;
     headers?: Record<string, string>;
-    body?: Record<string, any>;
+    body?: unknown;
 }
 
 interface ICollection {

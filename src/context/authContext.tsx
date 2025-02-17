@@ -6,7 +6,7 @@ interface Request {
     method: 'GET' | 'POST' | 'PUT' | 'DELETE';
     URL: string;
     headers?: Record<string, string>;
-    body?: Record<string, any>;
+    body?: unknown;
 }
 
 interface Collection {
