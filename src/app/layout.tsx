@@ -5,6 +5,7 @@ import MobileWarning from "@/app/components/MobileWarning";
 import SessionWrapper from "@/app/components/SessionWrapper";
 import { auth } from "@/auth";
 import FooterWrapper from "@/components/ui/footer-wrapper";
+import { AuthProvider } from "@/context/authContext";
 
 export const metadata: Metadata = {
   title: "Turbo Request – The Ultimate API Testing Tool",
@@ -17,11 +18,13 @@ export default async function RootLayout({ children }: Readonly<{ children: Reac
     <html className="dark" lang="en">
       <SessionWrapper>
         <body className={`antialiased`}>
-          <main className='hidden md:block'>
-            <Navbar session={session} />
-            {children}
-            <FooterWrapper />
-          </main>
+          <AuthProvider>
+            <main className='hidden md:block'>
+              <Navbar session={session} />
+              {children}
+              <FooterWrapper />
+            </main>
+          </AuthProvider>
           <main className="block md:hidden">
             <MobileWarning />
           </main>

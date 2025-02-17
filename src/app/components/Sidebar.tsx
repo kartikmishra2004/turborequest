@@ -11,9 +11,10 @@ import {
     DialogHeader,
     DialogTitle,
     DialogTrigger,
-} from "@/components/ui/dialogSn"
+} from "@/components/ui/dialogSn";
 import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
+import { useAuth } from "@/context/authContext";
 
 interface FileNode {
     name: string;
@@ -60,19 +61,19 @@ const FileItem = ({ node, level = 0 }: { node: FileNode; level?: number }) => {
 
 export default function Sidebar() {
 
-    const [demoFiles, setDemoFiles] = useState<FileNode[]>([]);
+    const { user, loading } = useAuth();
+    const [collection, setCollections] = useState<FileNode[]>([]);
     const [collData, setCollData] = useState({
         name: '',
         type: 'folder',
         children: [],
     });
-
     const handleCreateCollection = () => {
         const collection = {
             name: collData.name,
             type: "folder",
         };
-        setDemoFiles((prev) => [...prev, collection]);
+        setCollections((prev) => [...prev, collection]);
     }
 
     const handleCollData = (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -118,8 +119,8 @@ export default function Sidebar() {
                         </Dialog>
                     </div>
                 </div>
-                {demoFiles.length > 0 ?
-                    (demoFiles.map((file, id) => (
+                {collection.length > 0 ?
+                    (collection.map((file, id) => (
                         <FileItem key={id} node={file} />
                     ))) : <div className="min-h-[calc(100vh-10rem)] text-muted-foreground flex justify-center items-center">No collections</div>}
             </div>

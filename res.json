@@ -1,0 +1,34 @@
+{
+    "fullName": "Kartik Mishra",
+    "email": "kartik26nov2004@gmail.com",
+    "photoURL": "https://avatars.githubusercontent.com/u/166304878?v=4",
+    "collections": [
+        {
+            "name": "Collection_1",
+            "requests": [
+                {
+                    "type": "http",
+                    "method": "POST",
+                    "URL": "http://www.google.com/api",
+                    "headers": {
+                        "Content-Type": "application/json"
+                    },
+                    "body": {
+                        "name": "Rhon",
+                        "age": 23
+                    }
+                }
+            ]
+        },
+        {
+            "name": "Collection_2",
+            "requests": [
+                {
+                    "type": "http",
+                    "method": "GET",
+                    "URL": "http://www.google.com/api"
+                }
+            ]
+        }
+    ]
+}

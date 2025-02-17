@@ -1,28 +1,45 @@
 import mongoose, { Schema, Document, Types } from "mongoose";
 
-export interface User extends Document {
+interface IRequest {
+    type: string;
+    method: string;
+    URL: string;
+    headers?: Record<string, string>;
+    body?: Record<string, any>;
+}
+
+interface ICollection {
+    name: string;
+    requests: IRequest[];
+}
+
+interface IUser extends Document {
     fullName: string;
     email: string;
     photoURL: string;
-    collections: Types.ObjectId[]; // References for collection model
-};
+    collections: ICollection[];
+}
 
-const UserSchema: Schema<User> = new Schema({
-    fullName: {
-        type: String,
-    },
-    email: {
-        type: String,
-    },
-    photoURL: {
-        type: String,
-    },
-    collections: [{
-        type: Schema.Types.ObjectId,
-        ref: "Collection"
-    }],
-}, { timestamps: true });
+const requestSchema: Schema<IRequest> = new Schema({
+    type: { type: String, required: true },
+    method: { type: String, required: true },
+    URL: { type: String, required: true },
+    headers: { type: Map, of: String },
+    body: { type: Schema.Types.Mixed },
+});
 
-const UserModel = (mongoose.models.User as mongoose.Model<User>) || mongoose.model<User>("User", UserSchema);
+const collectionSchema: Schema<ICollection> = new Schema({
+    name: { type: String, required: true },
+    requests: { type: [requestSchema], required: true, default: [] },
+});
 
-export default UserModel;
+const userSchema: Schema<IUser> = new Schema({
+    fullName: { type: String, required: true },
+    email: { type: String, required: true, unique: true },
+    photoURL: { type: String },
+    collections: { type: [collectionSchema], required: true },
+});
+
+const User = (mongoose.models.User as mongoose.Model<IUser>) || mongoose.model<IUser>("User", userSchema);
+
+export default User;
