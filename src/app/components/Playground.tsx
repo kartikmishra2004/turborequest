@@ -81,8 +81,7 @@ export default function MainContent() {
     };
 
     const handleSend = () => {
-        let data = formData;
-        data.body = JSON.parse(data.body);
+        const data = formData;
         console.log(data);
     }
     return (
