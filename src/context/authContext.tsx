@@ -43,7 +43,7 @@ export const AuthProvider = ({ children }: { children: React.ReactNode }) => {
             setUser(jsonData.user);
             setLoading(false);
         } catch (error) {
-            console.log("Failed to get user data!!");
+            console.log("Failed to get user data!!", error);
         }
     }
 
