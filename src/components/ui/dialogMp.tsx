@@ -5,7 +5,6 @@ import { cn } from '@/lib/utils';
 import { useId } from 'react';
 import { createPortal } from 'react-dom';
 import { X } from 'lucide-react';
-import { usePreventScroll } from '@/hooks/usePreventScroll';
 
 const DialogContext = createContext<{
   isOpen: boolean;
@@ -61,11 +60,6 @@ function Dialog({
   );
   const dialogRef = useRef<HTMLDialogElement>(null);
   const isOpen = open !== undefined ? open : uncontrolledOpen;
-
-  // prevent scroll when dialog is open on iOS
-  usePreventScroll({
-    isDisabled: !isOpen,
-  });
 
   const setIsOpen = React.useCallback(
     (value: boolean) => {
