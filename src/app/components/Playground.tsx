@@ -15,10 +15,10 @@ import { CodeBlock } from "@/components/ui/code-block";
 import Editor from "@monaco-editor/react";
 
 const METHODS = [
-    { value: "get", label: "GET" },
-    { value: "post", label: "POST" },
-    { value: "put", label: "PUT" },
-    { value: "delete", label: "DELETE" },
+    { value: "GET", label: "GET" },
+    { value: "POST", label: "POST" },
+    { value: "PUT", label: "PUT" },
+    { value: "DELETE", label: "DELETE" },
 ];
 
 const PROTOCOLS = [
@@ -26,11 +26,6 @@ const PROTOCOLS = [
     { value: "ws", label: "WebSocket" },
     { value: "graphql", label: "GraphQL" },
 ];
-
-const sampleBody = `{ 
-    "name": "Kartik", 
-    "age": 22
-}`
 
 const sampleResponse = `{
     "expand": "attributes",
@@ -60,23 +55,44 @@ const sampleResponse = `{
 }`
 
 export default function MainContent() {
-    const [protocol, setProtocol] = useState("http");
-    const [method, setMethod] = useState("get");
-    const [url, setUrl] = useState("");
     const [activeTab, setActiveTab] = useState("params");
-    const [body, setBody] = useState(sampleBody);
+    const [formData, setFormData] = useState({
+        type: 'http',
+        method: 'GET',
+        URL: '',
+        params: '', // Pending
+        header: '', // Pending
+        body: '',
+    });
 
+    const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement | HTMLSelectElement> | { name: string, value: string | object | undefined }): void => {
+        if ("target" in e) {
+            const { name, value } = e.target;
+            setFormData((prev) => ({
+                ...prev,
+                [name]: value,
+            }));
+        } else {
+            setFormData((prev) => ({
+                ...prev,
+                [e.name]: e.value,
+            }));
+        }
+    };
+
+    const handleSend = () => {
+        let data = formData;
+        data.body = JSON.parse(data.body);
+    }
     return (
         <div className="flex-1 flex flex-col">
-            {/* Main Content */}
             <div className="flex-1 overflow-hidden">
                 <div className="h-full flex flex-col">
-                    {/* Request Controls */}
                     <div className="p-5 border-b">
                         <div className="flex gap-4 mb-4">
-                            <Select value={protocol} onValueChange={setProtocol}>
+                            <Select value={formData.type} onValueChange={(value) => handleChange({ name: "type", value })}>
                                 <SelectTrigger className="w-[180px]">
-                                    <SelectValue placeholder="Select protocol" />
+                                    <SelectValue />
                                 </SelectTrigger>
                                 <SelectContent>
                                     {PROTOCOLS.map((p) => (
@@ -86,47 +102,22 @@ export default function MainContent() {
                                     ))}
                                 </SelectContent>
                             </Select>
-
-                            {protocol === "http" && (
-                                <Select value={method} onValueChange={setMethod}>
-                                    <SelectTrigger
-                                        className={cn(
-                                            "w-[120px] font-semibold",
-                                            method === "get" && "text-api-get",
-                                            method === "post" && "text-api-post",
-                                            method === "put" && "text-api-put",
-                                            method === "delete" && "text-api-delete"
-                                        )}
-                                    >
-                                        <SelectValue placeholder="Method" />
+                            {formData.type === "http" && (
+                                <Select value={formData.method} onValueChange={(value) => handleChange({ name: "method", value })}>
+                                    <SelectTrigger className={cn("w-[120px]", formData.method === "GET" && "text-green-400", formData.method === "POST" && "text-blue-400", formData.method === "PUT" && "text-yellow-400", formData.method === "DELETE" && "text-red-400")}>
+                                        <SelectValue />
                                     </SelectTrigger>
                                     <SelectContent>
                                         {METHODS.map((m) => (
-                                            <SelectItem
-                                                key={m.value}
-                                                value={m.value}
-                                                className={cn(
-                                                    "font-semibold",
-                                                    m.value === "get" && "text-api-get",
-                                                    m.value === "post" && "text-api-post",
-                                                    m.value === "put" && "text-api-put",
-                                                    m.value === "delete" && "text-api-delete"
-                                                )}
-                                            >
+                                            <SelectItem key={m.value} value={m.value} className={cn(m.value === "GET" && "text-green-400", m.value === "POST" && "text-blue-400", m.value === "PUT" && "text-yellow-400", m.value === "DELETE" && "text-red-400")}>
                                                 {m.label}
                                             </SelectItem>
                                         ))}
                                     </SelectContent>
                                 </Select>
                             )}
-                            <input
-                                type="text"
-                                placeholder="Enter request URL"
-                                className="flex-1 px-3 py-2 rounded-md border bg-background"
-                                value={url}
-                                onChange={(e) => setUrl(e.target.value)}
-                            />
-                            <Button>
+                            <input type="text" autoComplete="off" placeholder="Enter request URL" className="flex-1 px-3 py-2 rounded-md border bg-background" name="URL" value={formData.URL} onChange={handleChange} />
+                            <Button onClick={handleSend}>
                                 <Send className="mr-2 h-4 w-4" />
                                 Send
                             </Button>
@@ -176,8 +167,8 @@ export default function MainContent() {
                                             height="60vh"
                                             defaultLanguage="json"
                                             theme="vs-dark"
-                                            value={body}
-                                            onChange={(value) => setBody(value!)}
+                                            value={formData.body}
+                                            onChange={(value) => handleChange({ name: "body", value })}
                                             options={{
                                                 fontSize: 14,
                                                 minimap: { enabled: false },
