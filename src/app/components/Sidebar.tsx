@@ -1,32 +1,29 @@
 "use client"
 import React, { useState } from "react";
-import { ChevronRight, ChevronDown, FileJson, Folder } from "lucide-react";
+import { ChevronRight, ChevronDown, FileJson, Folder, FolderPlus } from "lucide-react";
 import { cn } from "@/lib/utils";
+import {
+    Dialog,
+    DialogClose,
+    DialogContent,
+    DialogDescription,
+    DialogFooter,
+    DialogHeader,
+    DialogTitle,
+    DialogTrigger,
+} from "@/components/ui/dialog"
+import { Label } from "@radix-ui/react-select";
+import { Input } from "@/components/ui/input";
+import { Button } from "@/components/ui/button";
 
 interface FileNode {
-    id: string;
     name: string;
-    type: "file" | "folder";
+    type: string;
     children?: FileNode[];
 }
 
-const demoFiles: FileNode[] = [
-    {
-        id: "1",
-        name: "My Collection",
-        type: "folder",
-        children: [
-            { id: "3", name: "Login.json", type: "file" },
-            { id: "4", name: "Register.json", type: "file" },
-            { id: "5", name: "Users.json", type: "file" },
-            { id: "6", name: "Products.json", type: "file" },
-        ],
-    },
-];
-
 const FileItem = ({ node, level = 0 }: { node: FileNode; level?: number }) => {
     const [isOpen, setIsOpen] = useState(true);
-
     return (
         <div>
             <div
@@ -53,8 +50,8 @@ const FileItem = ({ node, level = 0 }: { node: FileNode; level?: number }) => {
             </div>
             {node.type === "folder" && isOpen && node.children && (
                 <div className="animate-slideIn">
-                    {node.children.map((child) => (
-                        <FileItem key={child.id} node={child} level={level + 1} />
+                    {node.children.map((child, id) => (
+                        <FileItem key={id} node={child} level={level + 1} />
                     ))}
                 </div>
             )}
@@ -63,13 +60,69 @@ const FileItem = ({ node, level = 0 }: { node: FileNode; level?: number }) => {
 };
 
 export default function Sidebar() {
+
+    const [demoFiles, setDemoFiles] = useState<FileNode[]>([]);
+    const [collData, setCollData] = useState({
+        name: '',
+        type: 'folder',
+        children: [],
+    });
+
+    const handleCreateCollection = () => {
+        const collection = {
+            name: collData.name,
+            type: "folder",
+        };
+        setDemoFiles((prev) => [...prev, collection]);
+    }
+
+    const handleCollData = (e: React.ChangeEvent<HTMLInputElement>) => {
+        const { name, value } = e.target;
+        setCollData({
+            ...collData,
+            [name]: value,
+        })
+    }
     return (
         <aside className="w-64 border-r max-h-[calc(100vh-3.5rem)] overflow-y-auto bg-background/95 backdrop-blur supports-[backdrop-filter]:bg-background/60">
             <div className="p-5">
-                <div className="font-medium mb-2">Collections</div>
-                {demoFiles.map((file) => (
-                    <FileItem key={file.id} node={file} />
-                ))}
+                <div className="font-medium mb-2 flex justify-between items-center">
+                    Collections
+                    <div className="flex space-x-3">
+                        <Dialog>
+                            <DialogTrigger>
+                                <span>
+                                    <FolderPlus className="h-4 w-4" />
+                                </span>
+                            </DialogTrigger>
+                            <DialogContent className="sm:max-w-[425px]">
+                                <DialogHeader>
+                                    <DialogTitle>Edit profile</DialogTitle>
+                                    <DialogDescription>
+                                        Make changes to your profile here. Click save when you're done.
+                                    </DialogDescription>
+                                </DialogHeader>
+                                <div className="grid gap-4 py-4">
+                                    <div className="grid grid-cols-4 items-center gap-4">
+                                        <label htmlFor="name" className="text-right">
+                                            Name
+                                        </label>
+                                        <Input autoComplete="off" placeholder="Collection name" name="name" id="name" onChange={handleCollData} value={collData.name} className="col-span-3 placeholder:text-muted-foreground" />
+                                    </div>
+                                </div>
+                                <DialogFooter>
+                                    <DialogClose asChild>
+                                        <Button disabled={!collData.name} onClick={handleCreateCollection} type="submit">Create</Button>
+                                    </DialogClose>
+                                </DialogFooter>
+                            </DialogContent>
+                        </Dialog>
+                    </div>
+                </div>
+                {demoFiles.length > 0 ?
+                    (demoFiles.map((file, id) => (
+                        <FileItem key={id} node={file} />
+                    ))) : <div className="min-h-[calc(100vh-10rem)] text-muted-foreground flex justify-center items-center">No collections</div>}
             </div>
         </aside>
     );
