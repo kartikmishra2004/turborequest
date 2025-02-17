@@ -1,12 +1,26 @@
 "use client"
 import { createContext, useContext, useState, useEffect } from "react";
 
+interface Request {
+    type: string;
+    method: 'GET' | 'POST' | 'PUT' | 'DELETE';
+    URL: string;
+    headers?: Record<string, string>;
+    body?: Record<string, any>;
+}
+
+interface Collection {
+    _id: string;
+    name: string;
+    requests: Request[];
+}
+
 type User = {
     id: string;
     fullName: string;
     email: string;
     photoURL?: string;
-    collections: string[];
+    collections: Collection[];
 } | null;
 
 type AuthContextType = {

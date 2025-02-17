@@ -1,7 +1,6 @@
 "use client"
 import React, { useState } from "react";
-import { ChevronRight, ChevronDown, FileJson, Folder, FolderPlus } from "lucide-react";
-import { cn } from "@/lib/utils";
+import { /* ChevronRight, ChevronDown, FileJson, Folder, */ FolderPlus } from "lucide-react";
 import {
     Dialog,
     DialogClose,
@@ -16,64 +15,18 @@ import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
 import { useAuth } from "@/context/authContext";
 
-interface FileNode {
-    name: string;
-    type: string;
-    children?: FileNode[];
-}
-
-const FileItem = ({ node, level = 0 }: { node: FileNode; level?: number }) => {
-    const [isOpen, setIsOpen] = useState(true);
-    return (
-        <div>
-            <div
-                className={cn(
-                    "flex items-center gap-2 px-2 py-1.5 hover:bg-accent/50 rounded-sm cursor-pointer text-sm",
-                    "transition-colors duration-200"
-                )}
-                style={{ paddingLeft: `${level * 12 + 8}px` }}
-                onClick={() => node.type === "folder" && setIsOpen(!isOpen)}
-            >
-                {node.type === "folder" ? (
-                    <>
-                        {isOpen ? (
-                            <ChevronDown className="h-4 w-4 shrink-0" />
-                        ) : (
-                            <ChevronRight className="h-4 w-4 shrink-0" />
-                        )}
-                        <Folder className="h-4 w-4 shrink-0 text-muted-foreground" />
-                    </>
-                ) : (
-                    <FileJson className="h-4 w-4 shrink-0 text-muted-foreground" />
-                )}
-                <span>{node.name}</span>
-            </div>
-            {node.type === "folder" && isOpen && node.children && (
-                <div className="animate-slideIn">
-                    {node.children.map((child, id) => (
-                        <FileItem key={id} node={child} level={level + 1} />
-                    ))}
-                </div>
-            )}
-        </div>
-    );
-};
-
 export default function Sidebar() {
 
-    const { user, loading } = useAuth();
-    const [collection, setCollections] = useState<FileNode[]>([]);
+    const { user } = useAuth();
     const [collData, setCollData] = useState({
         name: '',
         type: 'folder',
         children: [],
     });
+    // const [isOpen, setIsOpen] = useState(true);
+
     const handleCreateCollection = () => {
-        const collection = {
-            name: collData.name,
-            type: "folder",
-        };
-        setCollections((prev) => [...prev, collection]);
+
     }
 
     const handleCollData = (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -119,10 +72,9 @@ export default function Sidebar() {
                         </Dialog>
                     </div>
                 </div>
-                {collection.length > 0 ?
-                    (collection.map((file, id) => (
-                        <FileItem key={id} node={file} />
-                    ))) : <div className="min-h-[calc(100vh-10rem)] text-muted-foreground flex justify-center items-center">No collections</div>}
+                {user?.collections.map((item) => (
+                    <div key={item._id} className="">{item.name}</div>
+                ))}
             </div>
         </aside>
     );

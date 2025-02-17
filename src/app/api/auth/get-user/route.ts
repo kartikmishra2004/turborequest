@@ -12,7 +12,7 @@ export async function GET() {
         await dbConnect();
         const user = await UserModel.findOne({ fullName: session.user?.name });
         return NextResponse.json({ message: "Success!!", user });
-    } catch (error) {
+    } catch {
         return NextResponse.json({ error: "Failed to get user!!" }, { status: 500 });
     }
 }
