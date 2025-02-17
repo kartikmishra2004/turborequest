@@ -8,7 +8,7 @@ import {
     DialogTitle,
     DialogTrigger,
     DialogClose,
-} from '@/components/ui/dialog';
+} from '@/components/ui/dialogMp';
 import { Power, TriangleAlert } from 'lucide-react';
 import { Variants, Transition } from 'motion/react';
 import { signOut } from "next-auth/react";
