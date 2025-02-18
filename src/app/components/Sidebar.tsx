@@ -1,6 +1,6 @@
 "use client"
-import React, { useState } from "react";
-import { /* ChevronRight, ChevronDown, FileJson, Folder, */ FolderPlus } from "lucide-react";
+import React, { useEffect, useState } from "react";
+import { ChevronRight, ChevronDown, /* FileJson, */ Folder, FolderPlus } from "lucide-react";
 import {
     Dialog,
     DialogClose,
@@ -14,19 +14,73 @@ import {
 import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
 import { useAuth } from "@/context/authContext";
+import { Session } from "next-auth";
 
-export default function Sidebar() {
+interface SideBarProps {
+    session?: Partial<Session> | null,
+}
 
-    const { user } = useAuth();
+interface Request {
+    type: string;
+    method: 'GET' | 'POST' | 'PUT' | 'DELETE';
+    URL: string;
+    headers?: Record<string, string>;
+    body?: unknown;
+}
+
+interface Collection {
+    _id: string;
+    name: string;
+    requests: Request[];
+}
+
+type User = {
+    id: string;
+    fullName: string;
+    email: string;
+    photoURL?: string;
+    collections: Collection[];
+} | null;
+
+export default function Sidebar({ session }: SideBarProps) {
+
+    const { getData, loading } = useAuth();
+    const [openCollections, setOpenCollections] = useState<Record<string, boolean>>({});
     const [collData, setCollData] = useState({
         name: '',
-        type: 'folder',
-        children: [],
+        email: session?.user?.email,
     });
-    // const [isOpen, setIsOpen] = useState(true);
+    const [userData, setUserData] = useState<User>(null);
 
-    const handleCreateCollection = () => {
+    async function fetchUser() {
+        const data = await getData();
+        setUserData(data);
+    }
 
+    useEffect(() => {
+        fetchUser();
+    }, []);
+
+    const toggleCollection = (id: string) => {
+        setOpenCollections((prev) => ({
+            ...prev,
+            [id]: !prev[id],
+        }));
+    };
+
+    const CreateCollection = async () => {
+        try {
+            await fetch(`${process.env.NEXT_PUBLIC_API_URL}/api/collection/create`, {
+                method: "POST",
+                headers: {
+                    "Content-Type": "application/json",
+                },
+                body: JSON.stringify(collData),
+            });
+            fetchUser();
+        } catch {
+            console.log("Failed to create collection!!");
+        }
     }
 
     const handleCollData = (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -65,16 +119,30 @@ export default function Sidebar() {
                                 </div>
                                 <DialogFooter>
                                     <DialogClose asChild>
-                                        <Button disabled={!collData.name} onClick={handleCreateCollection} type="submit">Create</Button>
+                                        <Button disabled={!collData.name} onClick={CreateCollection} type="submit">Create</Button>
                                     </DialogClose>
                                 </DialogFooter>
                             </DialogContent>
                         </Dialog>
                     </div>
                 </div>
-                {user?.collections.map((item) => (
-                    <div key={item._id} className="">{item.name}</div>
-                ))}
+                {loading ? ((<div className="min-h-[calc(100vh-10rem)] text-muted-foreground flex justify-center items-center"><span className="w-10 h-10 border-t-2 animate-spin border-primary rounded-full "></span></div>)) :
+                    userData?.collections?.length! > 0 ?
+                        (userData?.collections.map((item) => (
+                            <div onClick={() => toggleCollection(item._id)} key={item._id} className="flex items-center gap-2 px-2 py-1.5 hover:bg-accent/50 rounded-sm cursor-pointer text-sm transition-colors duration-200">
+                                <>
+                                    {openCollections[item._id] ? (
+                                        <ChevronDown className="h-4 w-4 shrink-0" />
+                                    ) : (
+                                        <ChevronRight className="h-4 w-4 shrink-0" />
+                                    )}
+                                    <Folder className="h-4 w-4 shrink-0 text-muted-foreground" />
+                                </>
+                                <span>{item.name}</span>
+                            </div>
+                        ))) :
+                        (<div className="min-h-[calc(100vh-10rem)] text-muted-foreground flex justify-center items-center">No collections</div>)
+                }
             </div>
         </aside>
     );

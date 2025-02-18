@@ -1,30 +1,8 @@
 "use client"
-import { createContext, useContext, useState, useEffect } from "react";
-
-interface Request {
-    type: string;
-    method: 'GET' | 'POST' | 'PUT' | 'DELETE';
-    URL: string;
-    headers?: Record<string, string>;
-    body?: unknown;
-}
-
-interface Collection {
-    _id: string;
-    name: string;
-    requests: Request[];
-}
-
-type User = {
-    id: string;
-    fullName: string;
-    email: string;
-    photoURL?: string;
-    collections: Collection[];
-} | null;
+import { createContext, useContext, useState } from "react";
 
 type AuthContextType = {
-    user: User;
+    getData: () => Promise<any>
     loading: boolean;
 };
 
@@ -32,7 +10,6 @@ const AuthContext = createContext<AuthContextType | undefined>(undefined);
 
 export const AuthProvider = ({ children }: { children: React.ReactNode }) => {
 
-    const [user, setUser] = useState<User>(null);
     const [loading, setLoading] = useState(true);
 
     const getData = async () => {
@@ -40,19 +17,16 @@ export const AuthProvider = ({ children }: { children: React.ReactNode }) => {
         try {
             const data = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/api/auth/get-user`);
             const jsonData = await data.json();
-            setUser(jsonData.user);
             setLoading(false);
+            return jsonData.user;
         } catch (error) {
+            setLoading(false);
             console.log("Failed to get user data!!", error);
         }
     }
 
-    useEffect(() => {
-        getData();
-    }, [])
-
     return (
-        <AuthContext.Provider value={{ user, loading }}>
+        <AuthContext.Provider value={{ getData, loading }}>
             {children}
         </AuthContext.Provider>
     );
