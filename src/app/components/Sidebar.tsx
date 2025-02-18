@@ -51,15 +51,16 @@ export default function Sidebar({ session }: SideBarProps) {
         email: session?.user?.email,
     });
     const [userData, setUserData] = useState<User>(null);
+    const [refresh, setRefresh] = useState<boolean>(false);
 
-    async function fetchUser() {
-        const data = await getData();
-        setUserData(data);
-    }
 
     useEffect(() => {
+        async function fetchUser() {
+            const data = await getData();
+            setUserData(data);
+        }
         fetchUser();
-    }, [fetchUser]);
+    }, [refresh]);
 
     const toggleCollection = (id: string) => {
         setOpenCollections((prev) => ({
@@ -77,7 +78,7 @@ export default function Sidebar({ session }: SideBarProps) {
                 },
                 body: JSON.stringify(collData),
             });
-            fetchUser();
+            setRefresh(prev => !prev);
         } catch {
             console.log("Failed to create collection!!");
         }
