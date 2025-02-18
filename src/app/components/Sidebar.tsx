@@ -59,7 +59,7 @@ export default function Sidebar({ session }: SideBarProps) {
 
     useEffect(() => {
         fetchUser();
-    }, []);
+    }, [fetchUser]);
 
     const toggleCollection = (id: string) => {
         setOpenCollections((prev) => ({

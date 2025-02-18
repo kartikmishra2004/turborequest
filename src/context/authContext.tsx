@@ -1,8 +1,30 @@
 "use client"
-import { createContext, useContext, useState } from "react";
+import { createContext, SetStateAction, useContext, useState } from "react";
+
+interface Request {
+    type: string;
+    method: 'GET' | 'POST' | 'PUT' | 'DELETE';
+    URL: string;
+    headers?: Record<string, string>;
+    body?: unknown;
+}
+
+interface Collection {
+    _id: string;
+    name: string;
+    requests: Request[];
+}
+
+type User = {
+    id: string;
+    fullName: string;
+    email: string;
+    photoURL?: string;
+    collections: Collection[];
+} | null;
 
 type AuthContextType = {
-    getData: () => Promise<any>
+    getData: () => Promise<SetStateAction<User>>
     loading: boolean;
 };
 
