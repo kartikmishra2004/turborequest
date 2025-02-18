@@ -129,7 +129,7 @@ export default function Sidebar({ session }: SideBarProps) {
                     </div>
                 </div>
                 {loading ? ((<div className="min-h-[calc(100vh-10rem)] text-muted-foreground flex justify-center items-center"><span className="w-10 h-10 border-t-2 animate-spin border-primary rounded-full "></span></div>)) :
-                    userData?.collections?.length! > 0 ?
+                    (userData?.collections?.length ?? 0) > 0 ?
                         (userData?.collections.map((item) => (
                             <div onClick={() => toggleCollection(item._id)} key={item._id} className="flex items-center gap-2 px-2 py-1.5 hover:bg-accent/50 rounded-sm cursor-pointer text-sm transition-colors duration-200">
                                 <>
