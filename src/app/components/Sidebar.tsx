@@ -60,6 +60,7 @@ export default function Sidebar({ session }: SideBarProps) {
             setUserData(data);
         }
         fetchUser();
+        // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [refresh]);
 
     const toggleCollection = (id: string) => {
