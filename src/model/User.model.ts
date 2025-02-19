@@ -1,6 +1,7 @@
 import mongoose, { Schema, Document } from "mongoose";
 
 interface IRequest {
+    name: string;
     type: string;
     method: string;
     URL: string;
@@ -21,6 +22,7 @@ interface IUser extends Document {
 }
 
 const requestSchema: Schema<IRequest> = new Schema({
+    name: { type: String, required: true },
     type: { type: String, required: true },
     method: { type: String, required: true },
     URL: { type: String, required: true },
