@@ -97,7 +97,7 @@ export default function Sidebar({ session }: SideBarProps) {
         })
     }
     return (
-        <aside className="min-w-56 max-w-96 border-r max-h-[calc(100vh-3.5rem)] overflow-y-auto bg-background/95 backdrop-blur supports-[backdrop-filter]:bg-background/60 resize-x">
+        <aside className="min-w-56 max-w-96 border-r h-[calc(100vh-3.5rem)] overflow-y-auto bg-background/95 backdrop-blur supports-[backdrop-filter]:bg-background/60 resize-x">
             <div className="p-5">
                 <div className="font-medium mb-2 flex justify-between items-center">
                     Collections
