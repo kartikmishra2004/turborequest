@@ -6,7 +6,7 @@ interface IRequest {
     method: string;
     URL: string;
     headers?: Record<string, string>;
-    body?: unknown;
+    body?: string;
 }
 
 interface ICollection {
@@ -27,7 +27,7 @@ const requestSchema: Schema<IRequest> = new Schema({
     method: { type: String, default: 'GET' },
     URL: { type: String, default: '' },
     headers: { type: Map, of: String, default: {} },
-    body: { type: Schema.Types.Mixed, default: {} },
+    body: { type: Schema.Types.Mixed, default: '' },
 });
 
 const collectionSchema: Schema<ICollection> = new Schema({

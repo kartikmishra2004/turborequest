@@ -32,7 +32,7 @@ export default function Navbar({ session }: NavbarProps) {
                 {session && pathname === '/' && <WelcomeBar />}
                 <div className="container lg:px-24 px-3 flex h-14 max-w-screen-2xl items-center">
                     <Link href='/' className="mr-6 flex items-center space-x-2">
-                        <span><Image className="invert" src='/logo.png' alt="logo" width={30} height={30} /></span>
+                        <span><Image className="invert" priority src='/logo.png' alt="logo" width={30} height={30} /></span>
                     </Link>
                     <nav className={`flex ${session ? 'lg:ml-[7rem] ml-0' : ''} flex-1 justify-center items-center space-x-10 text-sm font-medium`}>
                         {navItems.map((item) => (

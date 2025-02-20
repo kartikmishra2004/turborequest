@@ -8,7 +8,7 @@ export default function Footer() {
             <div className="flex flex-col gap-8 py-8 md:flex-row md:py-12 px-24">
                 <div className="flex-1 space-y-6">
                     <div className="flex gap-2 items-center">
-                        <span><Image className="invert" src='/logo.png' alt="logo" width={30} height={30} /></span>
+                        <span><Image className="invert" priority src='/logo.png' alt="logo" width={30} height={30} /></span>
                         <h2 className="font-bold">Turbo Request</h2>
                     </div>
                     <p className="text-sm text-muted-foreground max-w-xs">The Ultimate Powerhouse for API Testing. Faster. Smarter. Stronger.</p>
