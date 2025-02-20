@@ -2,11 +2,12 @@
 import { useAuth } from "@/context/authContext";
 import { Session } from "next-auth";
 import React, { useState, useEffect } from "react";
-import { CollData, FormData, User } from "@/type";
+import { CollData, FormData, User, ReqData } from "@/type";
 import Sidebar from "./Sidebar";
 import CreateColModal from "./CreateColModal";
 import Playground from "./Playground";
 import Wellcome from "./Wellcome";
+import CreateReqModal from "./CreateReqModal";
 
 interface SandBoxProps {
     session?: Partial<Session> | null,
@@ -19,9 +20,11 @@ export default function Sandbox({ session }: SandBoxProps) {
     const [userData, setUserData] = useState<User>(null);
     const [refresh, setRefresh] = useState<boolean>(false);
     const [activeTab, setActiveTab] = useState<string>("headers");
-    const [isOpen, setIsOpen] = useState(false);
-    const [dialogOpen, setDialogOpen] = useState(false)
+    const [isOpen, setIsOpen] = useState<boolean>(false);
+    const [dialogOpen, setDialogOpen] = useState<boolean>(false);
+    const [openReqModal, setOpenReqModal] = useState<boolean>(false);
     const [collData, setCollData] = useState<CollData>({ name: '', email: session?.user?.email });
+    const [reqData, setReqData] = useState<ReqData>({ name: '', collectionName: '', email: session?.user?.email });
     const [formData, setFormData] = useState<FormData>({ type: 'http', method: 'GET', URL: '', header: {}, body: '' });
 
     useEffect(() => {
@@ -56,12 +59,43 @@ export default function Sandbox({ session }: SandBoxProps) {
         }
     }
 
+    const CreateRequest = async () => {
+        try {
+            await fetch(`${process.env.NEXT_PUBLIC_API_URL}/api/request/create`, {
+                method: "POST",
+                headers: {
+                    "Content-Type": "application/json",
+                },
+                body: JSON.stringify(reqData),
+            });
+            setRefresh(prev => !prev);
+            setOpenReqModal(false);
+        } catch {
+            console.log("Failed to create collection!!");
+        }
+    }
+
     const handleCollData = (e: React.ChangeEvent<HTMLInputElement>) => {
         const { name, value } = e.target;
         setCollData({
             ...collData,
             [name]: value,
         })
+    }
+
+    const handleReqChange = (e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement> | { name: string, value: string | object | undefined }): void => {
+        if ("target" in e) {
+            const { name, value } = e.target;
+            setReqData({
+                ...reqData,
+                [name]: value,
+            });
+        } else {
+            setReqData((prev) => ({
+                ...prev,
+                [e.name]: e.value,
+            }))
+        }
     }
 
     const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement | HTMLSelectElement> | { name: string, value: string | object | undefined }): void => {
@@ -86,8 +120,9 @@ export default function Sandbox({ session }: SandBoxProps) {
 
     return (
         <>
+            <CreateReqModal CreateRequest={CreateRequest} reqData={reqData} handleReqChange={handleReqChange} userData={userData} openReqModal={openReqModal} setOpenReqModal={setOpenReqModal} />
             <CreateColModal dialogOpen={dialogOpen} setDialogOpen={setDialogOpen} handleCollData={handleCollData} collData={collData} CreateCollection={CreateCollection} />
-            <Sidebar setDialogOpen={setDialogOpen} loading={loading} userData={userData} toggleCollection={toggleCollection} openCollections={openCollections} setIsOpen={setIsOpen} />
+            <Sidebar setOpenReqModal={setOpenReqModal} setDialogOpen={setDialogOpen} loading={loading} userData={userData} toggleCollection={toggleCollection} openCollections={openCollections} setIsOpen={setIsOpen} />
             <div className="flex-1 flex flex-col">
                 <div className="flex-1 overflow-hidden">
                     {isOpen ? (<Playground formData={formData} handleChange={handleChange} handleSend={handleSend} activeTab={activeTab} setActiveTab={setActiveTab} />) : (<Wellcome setDialogOpen={setDialogOpen} />)}

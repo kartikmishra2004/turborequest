@@ -28,6 +28,12 @@ export interface CollData {
     email?: string | null,
 }
 
+export interface ReqData {
+    name: string,
+    collectionName: string,
+    email?: string | null,
+}
+
 export interface FormData {
     type: string;
     method: string;

@@ -30,7 +30,7 @@ const CreateColModal: React.FC<Props> = ({ dialogOpen, setDialogOpen, handleColl
                         <span onClick={() => setDialogOpen(false)} className=" cursor-pointer"><X className="h-4 w-4" /></span>
                     </div>
                     <DialogDescription>
-                        Enter a name for your collection to organize your API requests.
+                        Enter a name for your collection to continue.
                     </DialogDescription>
                 </DialogHeader>
                 <div className="grid gap-4 py-4">

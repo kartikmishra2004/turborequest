@@ -1,4 +1,4 @@
-import { ChevronDown, ChevronRight, FileJson, Folder, FolderPlus } from 'lucide-react'
+import { ChevronDown, ChevronRight, FileJson, Folder, FolderPlus, Plus } from 'lucide-react'
 import React from 'react';
 import { User } from "@/type";
 
@@ -9,9 +9,10 @@ type Props = {
     loading: boolean;
     userData: User;
     openCollections: Record<string, boolean>;
+    setOpenReqModal: (params: boolean) => void;
 }
 
-const Sidebar: React.FC<Props> = ({ setDialogOpen, loading, userData, toggleCollection, openCollections, setIsOpen }) => {
+const Sidebar: React.FC<Props> = ({ setOpenReqModal, setDialogOpen, loading, userData, toggleCollection, openCollections, setIsOpen }) => {
     return (
         <aside className="min-w-56 max-w-96 border-r h-[calc(100vh-3.5rem)] overflow-y-auto bg-background/95 backdrop-blur supports-[backdrop-filter]:bg-background/60 resize-x">
             <div className="p-5">
@@ -20,6 +21,9 @@ const Sidebar: React.FC<Props> = ({ setDialogOpen, loading, userData, toggleColl
                     <div className="flex space-x-3">
                         <span onClick={() => setDialogOpen(true)} className="cursor-pointer">
                             <FolderPlus className="h-4 w-4" />
+                        </span>
+                        <span onClick={() => setOpenReqModal(true)} className="cursor-pointer">
+                            <Plus className="h-4 w-4" />
                         </span>
                     </div>
                 </div>
@@ -40,7 +44,7 @@ const Sidebar: React.FC<Props> = ({ setDialogOpen, loading, userData, toggleColl
                                 </div>
                                 {(openCollections[item._id]) && (item.requests.length > 0) &&
                                     (item.requests.map((request) => (
-                                        <div  onClick={() => setIsOpen(true)} key={request._id} className="pl-10 flex items-center gap-2 px-2 py-1.5 hover:bg-accent/50 rounded-sm cursor-pointer text-sm transition-colors duration-200">
+                                        <div onClick={() => setIsOpen(true)} key={request._id} className="pl-10 flex items-center gap-2 px-2 py-1.5 hover:bg-accent/50 rounded-sm cursor-pointer text-sm transition-colors duration-200">
                                             <FileJson className="h-4 w-4 shrink-0 text-muted-foreground" /> {request.name}
                                         </div>
                                     )))
