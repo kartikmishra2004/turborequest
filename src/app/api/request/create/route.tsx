@@ -10,7 +10,7 @@ export async function POST(request: NextRequest) {
     }
     try {
         const { name, type, method, URL, headers, body, email, collectionName } = await request.json();
-        if (!name || !type || !method || !URL || !headers || !body || !email || !collectionName) {
+        if (!name || !email || !collectionName) {
             return NextResponse.json({ error: "Please enter the required fields!!" }, { status: 400 });
         }
         await dbConnect();

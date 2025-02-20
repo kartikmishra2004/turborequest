@@ -23,11 +23,11 @@ interface IUser extends Document {
 
 const requestSchema: Schema<IRequest> = new Schema({
     name: { type: String, required: true },
-    type: { type: String, required: true },
-    method: { type: String, required: true },
-    URL: { type: String, required: true },
-    headers: { type: Map, of: String },
-    body: { type: Schema.Types.Mixed },
+    type: { type: String, default: 'http' },
+    method: { type: String, default: 'GET' },
+    URL: { type: String, default: '' },
+    headers: { type: Map, of: String, default: {} },
+    body: { type: Schema.Types.Mixed, default: {} },
 });
 
 const collectionSchema: Schema<ICollection> = new Schema({
