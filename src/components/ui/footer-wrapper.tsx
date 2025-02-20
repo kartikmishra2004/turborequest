@@ -1,5 +1,5 @@
 "use client"
-import Footer from '@/app/components/Footer';
+import Footer from '@/app/components/Extras/Footer';
 import { usePathname } from 'next/navigation';
 
 export default function FooterWrapper() {

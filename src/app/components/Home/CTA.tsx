@@ -1,7 +1,7 @@
 "use client"
 import { Button } from "@/components/ui/button";
 import { motion } from "framer-motion";
-import CodeBlockDemo from '@/app/components/CodeBlock'
+import CodeBlockDemo from '@/app/components/Home/CodeBlock'
 import Link from "next/link";
 
 export default function CTA() {

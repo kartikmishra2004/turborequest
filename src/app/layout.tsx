@@ -1,8 +1,8 @@
 import type { Metadata } from "next";
 import "./globals.css";
-import Navbar from '@/app/components/Navbar'
-import MobileWarning from "@/app/components/MobileWarning";
-import SessionWrapper from "@/app/components/SessionWrapper";
+import Navbar from '@/app/components/Extras/Navbar'
+import MobileWarning from "@/app/components/Extras/MobileWarning";
+import SessionWrapper from "@/app/components/Extras/SessionWrapper";
 import { auth } from "@/auth";
 import FooterWrapper from "@/components/ui/footer-wrapper";
 import { AuthProvider } from "@/context/authContext";

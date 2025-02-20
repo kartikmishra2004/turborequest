@@ -4,8 +4,8 @@ import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { Button } from "@/components/ui/button";
 import { Session } from "next-auth";
-import Logout from "@/app/components/Logout";
-import WelcomeBar from "@/app/components/WelcomeBar";
+import Logout from "@/app/components/Extras/Logout";
+import WelcomeBar from "@/app/components/Home/WelcomeBar";
 
 interface NavItem {
     name: string;

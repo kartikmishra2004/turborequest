@@ -1,6 +1,6 @@
 import { Metadata } from "next";
 import { auth } from "@/auth";
-import Sandbox from "@/app/components/Sandbox";
+import Sandbox from "@/app/components/API-Sandbox/Sandbox";
 
 export const metadata: Metadata = {
     title: "Turbo Request – API Sandbox",
