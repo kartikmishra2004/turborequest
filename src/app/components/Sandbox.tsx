@@ -2,13 +2,11 @@
 import { ChevronRight, ChevronDown, FileJson, Folder, FolderPlus, Plus, X } from "lucide-react";
 import {
     Dialog,
-    DialogClose,
     DialogContent,
     DialogDescription,
     DialogFooter,
     DialogHeader,
     DialogTitle,
-    DialogTrigger,
 } from "@/components/ui/dialogSn";
 import { Input } from "@/components/ui/input";
 import { useAuth } from "@/context/authContext";
