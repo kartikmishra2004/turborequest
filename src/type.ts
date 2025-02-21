@@ -1,14 +1,14 @@
-interface Request {
+export interface Request {
     name: string;
     _id: string;
     type: string;
     method: 'GET' | 'POST' | 'PUT' | 'DELETE';
     URL: string;
-    headers?: Record<string, string>;
+    headers?: Record<string, string | number | boolean | null | string[]>;
     body?: unknown;
 }
 
-interface Collection {
+export interface Collection {
     _id: string;
     name: string;
     requests: Request[];
@@ -38,6 +38,6 @@ export interface FormData {
     type: string;
     method: string;
     URL: string;
-    header: Record<string, string | number | boolean | null | string[]>;
-    body: string;
+    headers?: Record<string, string | number | boolean | null | string[]>;
+    body?: unknown;
 }

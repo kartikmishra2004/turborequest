@@ -25,7 +25,7 @@ export default function Sandbox({ session }: SandBoxProps) {
     const [openReqModal, setOpenReqModal] = useState<boolean>(false);
     const [collData, setCollData] = useState<CollData>({ name: '', email: session?.user?.email });
     const [reqData, setReqData] = useState<ReqData>({ name: '', collectionName: '', email: session?.user?.email });
-    const [formData, setFormData] = useState<FormData>({ type: 'http', method: 'GET', URL: '', header: {}, body: '' });
+    const [formData, setFormData] = useState<FormData>({ type: 'http', method: 'GET', URL: '', headers: {}, body: '' });
     const [colLoading, setColLoading] = useState<boolean>(false);
     const [reqLoading, setReqLoading] = useState<boolean>(false);
 
@@ -44,6 +44,10 @@ export default function Sandbox({ session }: SandBoxProps) {
             [id]: !prev[id],
         }));
     };
+
+    const openRequest = (request: FormData) => {
+        setFormData(request);
+    }
 
     const CreateCollection = async () => {
         setColLoading(true);
@@ -130,7 +134,7 @@ export default function Sandbox({ session }: SandBoxProps) {
         <>
             <CreateReqModal reqLoading={reqLoading} CreateRequest={CreateRequest} reqData={reqData} handleReqChange={handleReqChange} userData={userData} openReqModal={openReqModal} setOpenReqModal={setOpenReqModal} />
             <CreateColModal colLoading={colLoading} dialogOpen={dialogOpen} setDialogOpen={setDialogOpen} handleCollData={handleCollData} collData={collData} CreateCollection={CreateCollection} />
-            <Sidebar setOpenReqModal={setOpenReqModal} setDialogOpen={setDialogOpen} loading={loading} userData={userData} toggleCollection={toggleCollection} openCollections={openCollections} setIsOpen={setIsOpen} />
+            <Sidebar openRequest={openRequest} setOpenReqModal={setOpenReqModal} setDialogOpen={setDialogOpen} loading={loading} userData={userData} toggleCollection={toggleCollection} openCollections={openCollections} setIsOpen={setIsOpen} />
             <div className="flex-1 flex flex-col">
                 <div className="flex-1 overflow-hidden">
                     {isOpen ? (<Playground formData={formData} handleChange={handleChange} handleSend={handleSend} activeTab={activeTab} setActiveTab={setActiveTab} />) : (<Wellcome setOpenReqModal={setOpenReqModal} setDialogOpen={setDialogOpen} />)}
