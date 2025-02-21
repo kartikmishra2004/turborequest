@@ -109,6 +109,7 @@ export default function Sandbox({ session }: SandBoxProps) {
                 }),
             });
             setSaved(true);
+            setRefresh(prev => !prev);
             setTimeout(() => {
                 setSaved(false);
             }, 2000);
