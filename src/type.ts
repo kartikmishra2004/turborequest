@@ -5,7 +5,7 @@ export interface Request {
     method: 'GET' | 'POST' | 'PUT' | 'DELETE';
     URL: string;
     headers?: Record<string, string | number | boolean | null | string[]>;
-    body?: unknown;
+    body?: string;
 }
 
 export interface Collection {
@@ -39,5 +39,5 @@ export interface FormData {
     method: string;
     URL: string;
     headers?: Record<string, string | number | boolean | null | string[]>;
-    body?: unknown;
+    body?: string;
 }
