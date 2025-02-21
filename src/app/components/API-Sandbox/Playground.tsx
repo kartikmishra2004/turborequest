@@ -6,7 +6,7 @@ import {
     SelectTrigger,
     SelectValue,
 } from "@/components/ui/select";
-import { Send } from "lucide-react";
+import { Save, Send } from "lucide-react";
 import { cn } from "@/lib/utils";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { CodeBlock } from "@/components/ui/code-block";
@@ -14,6 +14,7 @@ import Editor from "@monaco-editor/react";
 import { METHODS, PROTOCOLS, sampleResponse } from "@/constants";
 import { Button } from '@/components/ui/button';
 import { FormData } from '@/type';
+import { Tooltip, TooltipContent, TooltipTrigger } from '@/components/ui/tooltip';
 
 type Props = {
     formData: FormData;
@@ -56,9 +57,19 @@ const Playground: React.FC<Props> = ({ formData, handleChange, handleSend, activ
                     )}
                     <input type="text" autoComplete="off" placeholder="Enter request URL" className="flex-1 px-3 py-2 rounded-md border bg-background" name="URL" value={formData.URL} onChange={handleChange} />
                     <Button onClick={handleSend}>
-                        <Send className="mr-2 h-4 w-4" />
+                        <Send className="h-4 w-4" />
                         Send
                     </Button>
+                    <Tooltip>
+                        <TooltipTrigger asChild>
+                            <Button variant='secondary'>
+                                <Save className="h-4 w-4" />
+                            </Button>
+                        </TooltipTrigger>
+                        <TooltipContent>
+                            <p>Save request</p>
+                        </TooltipContent>
+                    </Tooltip>
                 </div>
             </div>
             <div className="flex-1 grid grid-cols-2 divide-x overflow-hidden">
