@@ -11,13 +11,13 @@ type Props = {
     userData: User;
     openCollections: Record<string, boolean>;
     setOpenReqModal: (params: boolean) => void;
-    openRequest: (params: FormData) => void;
+    openRequest: (param1: FormData, param2: string) => void;
 }
 
 const Sidebar: React.FC<Props> = ({ openRequest, setOpenReqModal, setDialogOpen, loading, userData, toggleCollection, openCollections, setIsOpen }) => {
 
-    const handleOpen = (request: FormData) => {
-        openRequest(request)
+    const handleOpen = (request: FormData, collName: string) => {
+        openRequest(request, collName)
         setIsOpen(true);
     }
 
@@ -66,7 +66,7 @@ const Sidebar: React.FC<Props> = ({ openRequest, setOpenReqModal, setDialogOpen,
                                 </div>
                                 {(openCollections[item._id]) && (item.requests.length > 0) &&
                                     (item.requests.map((request) => (
-                                        <div onClick={() => handleOpen(request)} key={request._id} className="pl-10 flex items-center gap-2 px-2 py-1.5 hover:bg-accent/50 rounded-sm cursor-pointer text-sm transition-colors duration-200">
+                                        <div onClick={() => handleOpen(request, item.name)} key={request._id} className="pl-10 flex items-center gap-2 px-2 py-1.5 hover:bg-accent/50 rounded-sm cursor-pointer text-sm transition-colors duration-200">
                                             <FileJson className="h-4 w-4 shrink-0 text-muted-foreground" /> {request.name.length > 15 ? request.name.slice(0, 15) + "..." : request.name}
                                         </div>
                                     )))

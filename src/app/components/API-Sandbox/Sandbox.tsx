@@ -25,9 +25,11 @@ export default function Sandbox({ session }: SandBoxProps) {
     const [openReqModal, setOpenReqModal] = useState<boolean>(false);
     const [collData, setCollData] = useState<CollData>({ name: '', email: session?.user?.email });
     const [reqData, setReqData] = useState<ReqData>({ name: '', collectionName: '', email: session?.user?.email });
-    const [formData, setFormData] = useState<FormData>({ type: 'http', method: 'GET', URL: '', headers: {}, body: '' });
+    const [formData, setFormData] = useState<FormData>({ name: "", type: 'http', method: 'GET', URL: '', headers: { "Content-Type": "application/json" }, body: '' });
     const [colLoading, setColLoading] = useState<boolean>(false);
     const [reqLoading, setReqLoading] = useState<boolean>(false);
+    const [openedCol, setOpenCol] = useState<string>('');
+    const [saved, setSaved] = useState<boolean>(false);
 
     useEffect(() => {
         async function fetchUser() {
@@ -45,8 +47,9 @@ export default function Sandbox({ session }: SandBoxProps) {
         }));
     };
 
-    const openRequest = (request: FormData) => {
+    const openRequest = (request: FormData, collName: string) => {
         setFormData(request);
+        setOpenCol(collName);
     }
 
     const CreateCollection = async () => {
@@ -83,7 +86,34 @@ export default function Sandbox({ session }: SandBoxProps) {
             setOpenReqModal(false);
         } catch {
             setReqLoading(false);
-            console.log("Failed to create collection!!");
+            console.log("Failed to create request!!");
+        }
+    }
+
+    const updateRequest = async () => {
+        try {
+            await fetch(`${process.env.NEXT_PUBLIC_API_URL}/api/request/update`, {
+                method: "PUT",
+                headers: {
+                    "Content-Type": "application/json",
+                },
+                body: JSON.stringify({
+                    email: session?.user?.email,
+                    collectionName: openedCol,
+                    requestName: formData.name,
+                    type: formData.type,
+                    method: formData.method,
+                    URL: formData.URL,
+                    headers: formData.headers,
+                    body: formData.body,
+                }),
+            });
+            setSaved(true);
+            setTimeout(() => {
+                setSaved(false);
+            }, 2000);
+        } catch {
+            console.log("Failed to update request!!");
         }
     }
 
@@ -137,7 +167,7 @@ export default function Sandbox({ session }: SandBoxProps) {
             <Sidebar openRequest={openRequest} setOpenReqModal={setOpenReqModal} setDialogOpen={setDialogOpen} loading={loading} userData={userData} toggleCollection={toggleCollection} openCollections={openCollections} setIsOpen={setIsOpen} />
             <div className="flex-1 flex flex-col">
                 <div className="flex-1 overflow-hidden">
-                    {isOpen ? (<Playground formData={formData} handleChange={handleChange} handleSend={handleSend} activeTab={activeTab} setActiveTab={setActiveTab} />) : (<Wellcome setOpenReqModal={setOpenReqModal} setDialogOpen={setDialogOpen} />)}
+                    {isOpen ? (<Playground saved={saved} updateRequest={updateRequest} formData={formData} handleChange={handleChange} handleSend={handleSend} activeTab={activeTab} setActiveTab={setActiveTab} />) : (<Wellcome setOpenReqModal={setOpenReqModal} setDialogOpen={setDialogOpen} />)}
                 </div>
             </div>
         </>

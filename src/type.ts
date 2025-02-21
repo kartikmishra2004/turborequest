@@ -35,6 +35,7 @@ export interface ReqData {
 }
 
 export interface FormData {
+    name: string;
     type: string;
     method: string;
     URL: string;

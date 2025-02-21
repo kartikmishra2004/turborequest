@@ -6,7 +6,7 @@ import {
     SelectTrigger,
     SelectValue,
 } from "@/components/ui/select";
-import { Save, Send } from "lucide-react";
+import { Check, Save, Send } from "lucide-react";
 import { cn } from "@/lib/utils";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { CodeBlock } from "@/components/ui/code-block";
@@ -22,9 +22,11 @@ type Props = {
     handleSend: () => void;
     activeTab: string;
     setActiveTab: (params: string) => void;
+    updateRequest: () => void;
+    saved: boolean;
 }
 
-const Playground: React.FC<Props> = ({ formData, handleChange, handleSend, activeTab, setActiveTab }) => {
+const Playground: React.FC<Props> = ({ saved, updateRequest, formData, handleChange, handleSend, activeTab, setActiveTab }) => {
     return (
         <div className="h-full flex flex-col">
             <div className="p-5 border-b">
@@ -62,8 +64,8 @@ const Playground: React.FC<Props> = ({ formData, handleChange, handleSend, activ
                     </Button>
                     <Tooltip>
                         <TooltipTrigger asChild>
-                            <Button variant='secondary'>
-                                <Save className="h-4 w-4" />
+                            <Button onClick={updateRequest} variant='secondary'>
+                                {saved ? <Check className="h-4 w-4" /> : <Save className="h-4 w-4" />}
                             </Button>
                         </TooltipTrigger>
                         <TooltipContent>
