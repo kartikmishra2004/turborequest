@@ -18,9 +18,10 @@ type Props = {
     handleCollData: (e: React.ChangeEvent<HTMLInputElement>) => void;
     collData: CollData;
     CreateCollection: () => void;
+    colLoading: boolean;
 }
 
-const CreateColModal: React.FC<Props> = ({ dialogOpen, setDialogOpen, handleCollData, collData, CreateCollection }) => {
+const CreateColModal: React.FC<Props> = ({ colLoading, dialogOpen, setDialogOpen, handleCollData, collData, CreateCollection }) => {
     return (
         <Dialog open={dialogOpen}>
             <DialogContent className="sm:max-w-[425px]">
@@ -42,7 +43,7 @@ const CreateColModal: React.FC<Props> = ({ dialogOpen, setDialogOpen, handleColl
                     </div>
                 </div>
                 <DialogFooter>
-                    <Button disabled={!collData.name} onClick={CreateCollection} type="submit">Create</Button>
+                    <Button disabled={!collData.name} onClick={CreateCollection} type="submit">{colLoading ? (<div className="px-[0.7rem]"><div className="loader"></div></div>) : "Create"}</Button>
                 </DialogFooter>
             </DialogContent>
         </Dialog>

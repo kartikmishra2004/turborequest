@@ -26,6 +26,8 @@ export default function Sandbox({ session }: SandBoxProps) {
     const [collData, setCollData] = useState<CollData>({ name: '', email: session?.user?.email });
     const [reqData, setReqData] = useState<ReqData>({ name: '', collectionName: '', email: session?.user?.email });
     const [formData, setFormData] = useState<FormData>({ type: 'http', method: 'GET', URL: '', header: {}, body: '' });
+    const [colLoading, setColLoading] = useState<boolean>(false);
+    const [reqLoading, setReqLoading] = useState<boolean>(false);
 
     useEffect(() => {
         async function fetchUser() {
@@ -44,6 +46,7 @@ export default function Sandbox({ session }: SandBoxProps) {
     };
 
     const CreateCollection = async () => {
+        setColLoading(true);
         try {
             await fetch(`${process.env.NEXT_PUBLIC_API_URL}/api/collection/create`, {
                 method: "POST",
@@ -52,14 +55,17 @@ export default function Sandbox({ session }: SandBoxProps) {
                 },
                 body: JSON.stringify(collData),
             });
+            setColLoading(false);
             setRefresh(prev => !prev);
             setDialogOpen(false);
         } catch {
+            setColLoading(false);
             console.log("Failed to create collection!!");
         }
     }
 
     const CreateRequest = async () => {
+        setReqLoading(true);
         try {
             await fetch(`${process.env.NEXT_PUBLIC_API_URL}/api/request/create`, {
                 method: "POST",
@@ -68,9 +74,11 @@ export default function Sandbox({ session }: SandBoxProps) {
                 },
                 body: JSON.stringify(reqData),
             });
+            setReqLoading(false);
             setRefresh(prev => !prev);
             setOpenReqModal(false);
         } catch {
+            setReqLoading(false);
             console.log("Failed to create collection!!");
         }
     }
@@ -120,12 +128,12 @@ export default function Sandbox({ session }: SandBoxProps) {
 
     return (
         <>
-            <CreateReqModal CreateRequest={CreateRequest} reqData={reqData} handleReqChange={handleReqChange} userData={userData} openReqModal={openReqModal} setOpenReqModal={setOpenReqModal} />
-            <CreateColModal dialogOpen={dialogOpen} setDialogOpen={setDialogOpen} handleCollData={handleCollData} collData={collData} CreateCollection={CreateCollection} />
+            <CreateReqModal reqLoading={reqLoading} CreateRequest={CreateRequest} reqData={reqData} handleReqChange={handleReqChange} userData={userData} openReqModal={openReqModal} setOpenReqModal={setOpenReqModal} />
+            <CreateColModal colLoading={colLoading} dialogOpen={dialogOpen} setDialogOpen={setDialogOpen} handleCollData={handleCollData} collData={collData} CreateCollection={CreateCollection} />
             <Sidebar setOpenReqModal={setOpenReqModal} setDialogOpen={setDialogOpen} loading={loading} userData={userData} toggleCollection={toggleCollection} openCollections={openCollections} setIsOpen={setIsOpen} />
             <div className="flex-1 flex flex-col">
                 <div className="flex-1 overflow-hidden">
-                    {isOpen ? (<Playground formData={formData} handleChange={handleChange} handleSend={handleSend} activeTab={activeTab} setActiveTab={setActiveTab} />) : (<Wellcome setDialogOpen={setDialogOpen} />)}
+                    {isOpen ? (<Playground formData={formData} handleChange={handleChange} handleSend={handleSend} activeTab={activeTab} setActiveTab={setActiveTab} />) : (<Wellcome setOpenReqModal={setOpenReqModal} setDialogOpen={setDialogOpen} />)}
                 </div>
             </div>
         </>

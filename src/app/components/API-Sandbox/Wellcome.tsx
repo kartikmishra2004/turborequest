@@ -4,9 +4,10 @@ import React from 'react'
 
 type Props = {
     setDialogOpen: (params: boolean) => void;
+    setOpenReqModal: (params: boolean) => void;
 }
 
-const Wellcome: React.FC<Props> = ({ setDialogOpen }) => {
+const Wellcome: React.FC<Props> = ({ setDialogOpen, setOpenReqModal }) => {
     return (
         <div className="min-h-[calc(100vh-3.5rem)] flex items-center justify-center relative overflow-hidden">
             <div className="absolute inset-0 bg-gradient-to-br from-zinc-900 via-background to-zinc-900" />
@@ -37,7 +38,7 @@ const Wellcome: React.FC<Props> = ({ setDialogOpen }) => {
                             size="lg"
                             variant='outline'
                             className=""
-                            onClick={() => console.log("Create collection clicked")}
+                            onClick={() => setOpenReqModal(true)}
                         >
                             <span className="flex items-center gap-2">
                                 <span>New request</span>

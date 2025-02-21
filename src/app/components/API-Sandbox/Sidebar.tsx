@@ -1,6 +1,7 @@
 import { ChevronDown, ChevronRight, FileJson, Folder, FolderPlus, Plus } from 'lucide-react'
 import React from 'react';
 import { User } from "@/type";
+import { Tooltip, TooltipContent, TooltipTrigger } from '@/components/ui/tooltip';
 
 type Props = {
     setDialogOpen: (param: boolean) => void;
@@ -14,17 +15,31 @@ type Props = {
 
 const Sidebar: React.FC<Props> = ({ setOpenReqModal, setDialogOpen, loading, userData, toggleCollection, openCollections, setIsOpen }) => {
     return (
-        <aside className="min-w-56 max-w-96 border-r h-[calc(100vh-3.5rem)] overflow-y-auto bg-background/95 backdrop-blur supports-[backdrop-filter]:bg-background/60 resize-x">
+        <aside className="min-w-56 max-w-96 border-r h-[calc(100vh-3.5rem)] overflow-x-hidden overflow-y-auto bg-background/95 backdrop-blur supports-[backdrop-filter]:bg-background/60">
             <div className="p-5">
                 <div className="font-medium mb-2 flex justify-between items-center">
                     Collections
                     <div className="flex space-x-3">
-                        <span onClick={() => setDialogOpen(true)} className="cursor-pointer">
-                            <FolderPlus className="h-4 w-4" />
-                        </span>
-                        <span onClick={() => setOpenReqModal(true)} className="cursor-pointer">
-                            <Plus className="h-4 w-4" />
-                        </span>
+                        <Tooltip>
+                            <TooltipTrigger asChild>
+                                <span onClick={() => setDialogOpen(true)} className="cursor-pointer">
+                                    <FolderPlus className="h-4 w-4" />
+                                </span>
+                            </TooltipTrigger>
+                            <TooltipContent>
+                                <p>Create collection</p>
+                            </TooltipContent>
+                        </Tooltip>
+                        <Tooltip>
+                            <TooltipTrigger asChild>
+                                <span onClick={() => setOpenReqModal(true)} className="cursor-pointer">
+                                    <Plus className="h-4 w-4" />
+                                </span>
+                            </TooltipTrigger>
+                            <TooltipContent>
+                                <p>Create request</p>
+                            </TooltipContent>
+                        </Tooltip>
                     </div>
                 </div>
                 {loading ? ((<div className="min-h-[calc(100vh-10rem)] text-muted-foreground flex justify-center items-center"><span className="w-10 h-10 border-t-2 animate-spin border-primary rounded-full "></span></div>)) :
@@ -40,12 +55,12 @@ const Sidebar: React.FC<Props> = ({ setOpenReqModal, setDialogOpen, loading, use
                                         )}
                                         <Folder className="h-4 w-4 shrink-0 text-muted-foreground" />
                                     </>
-                                    <span>{item.name}</span>
+                                    <span>{item.name.length > 16 ? item.name.slice(0, 16) + "..." : item.name}</span>
                                 </div>
                                 {(openCollections[item._id]) && (item.requests.length > 0) &&
                                     (item.requests.map((request) => (
                                         <div onClick={() => setIsOpen(true)} key={request._id} className="pl-10 flex items-center gap-2 px-2 py-1.5 hover:bg-accent/50 rounded-sm cursor-pointer text-sm transition-colors duration-200">
-                                            <FileJson className="h-4 w-4 shrink-0 text-muted-foreground" /> {request.name}
+                                            <FileJson className="h-4 w-4 shrink-0 text-muted-foreground" /> {request.name.length > 15 ? request.name.slice(0, 15) + "..." : request.name}
                                         </div>
                                     )))
                                 }
