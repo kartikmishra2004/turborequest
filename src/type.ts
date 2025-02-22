@@ -4,7 +4,7 @@ export interface Request {
     type: string;
     method: 'GET' | 'POST' | 'PUT' | 'DELETE';
     URL: string;
-    headers?: Record<string, string | number | boolean | null | string[]>;
+    headers: Record<string, string | number | boolean | null | string[]>;
     body?: string;
 }
 
