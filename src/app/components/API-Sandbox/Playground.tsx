@@ -24,9 +24,14 @@ type Props = {
     setActiveTab: (params: string) => void;
     updateRequest: () => void;
     saved: boolean;
+    setHeaderKey: (params: string) => void;
+    setHeaderValue: (params: string) => void;
+    headerKey: string;
+    headerValue: string;
+    handleHeader: () => void;
 }
 
-const Playground: React.FC<Props> = ({ saved, updateRequest, formData, handleChange, handleSend, activeTab, setActiveTab }) => {
+const Playground: React.FC<Props> = ({ handleHeader, headerKey, headerValue, setHeaderValue, setHeaderKey, saved, updateRequest, formData, handleChange, handleSend, activeTab, setActiveTab }) => {
     return (
         <div className="h-full flex flex-col">
             <div className="p-5 border-b">
@@ -64,7 +69,7 @@ const Playground: React.FC<Props> = ({ saved, updateRequest, formData, handleCha
                     </Button>
                     <Tooltip>
                         <TooltipTrigger asChild>
-                            <Button onClick={updateRequest} variant='secondary'>
+                            <Button disabled={saved} onClick={updateRequest} variant='secondary'>
                                 {saved ? <Check className="h-4 w-4" /> : <Save className="h-4 w-4" />}
                             </Button>
                         </TooltipTrigger>
@@ -75,7 +80,7 @@ const Playground: React.FC<Props> = ({ saved, updateRequest, formData, handleCha
                 </div>
             </div>
             <div className="flex-1 grid grid-cols-2 divide-x overflow-hidden">
-                <div className="p-4">
+                <div className="pt-4 px-4">
                     <Tabs value={activeTab} onValueChange={setActiveTab}>
                         <TabsList>
                             <TabsTrigger value="headers">Headers</TabsTrigger>
@@ -83,18 +88,31 @@ const Playground: React.FC<Props> = ({ saved, updateRequest, formData, handleCha
                         </TabsList>
                         <TabsContent value="headers" className="p-4">
                             <div className="grid grid-cols-[1fr,1fr,auto] gap-2">
-                                <input
-                                    type="text"
-                                    placeholder="Key"
-                                    className="px-3 py-1 rounded-md border bg-background text-sm"
-                                />
-                                <input
-                                    type="text"
-                                    placeholder="Value"
-                                    className="px-3 py-1 rounded-md border bg-background text-sm"
-                                />
-                                <Button variant="outline" size="sm">Add</Button>
+                                <input value={headerKey} onChange={(e) => setHeaderKey(e.target.value)} type="text" placeholder="Key" className="px-3 py-1 rounded-md border bg-background text-sm" />
+                                <input value={headerValue} onChange={(e) => setHeaderValue(e.target.value)} type="text" placeholder="Value" className="px-3 py-1 rounded-md border bg-background text-sm" />
+                                <Button disabled={!headerKey || !headerValue} variant="outline" size="sm" onClick={handleHeader}>Add</Button>
                             </div>
+                            <div className="pt-5">
+                                <div className="max-h-[calc(100vh-19rem)] overflow-y-auto border rounded-lg">
+                                    <table className="w-full border-collapse text-sm">
+                                        <thead className="text-primary sticky top-0">
+                                            <tr>
+                                                <th className="p-2 bg-zinc-900 border-b text-left">Key</th>
+                                                <th className="p-2 bg-zinc-900 border-b border-l text-left">Value</th>
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                            {Object.entries(formData.headers).map(([key, value]) => (
+                                                <tr key={key}>
+                                                    <td className="p-2 border-t border-r bg-zinc-900 text-muted-foreground">{key}</td>
+                                                    <td className="p-2 border-t bg-zinc-900 text-muted-foreground">{value}</td>
+                                                </tr>
+                                            ))}
+                                        </tbody>
+                                    </table>
+                                </div>
+                            </div>
+
                         </TabsContent>
                         <TabsContent value="body" className="p-4">
                             <div className="rounded-md overflow-hidden border">

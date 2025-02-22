@@ -32,8 +32,8 @@ const CreateReqModal: React.FC<Props> = ({ reqLoading, CreateRequest, reqData, o
                         <DialogTitle>Create request</DialogTitle>
                         <span onClick={() => setOpenReqModal(!openReqModal)} className=" cursor-pointer"><X className="h-4 w-4" /></span>
                     </div>
-                    <DialogDescription>
-                        Enter a name for your request to continue.
+                    <DialogDescription className={userData?.collections.length === 0 ? "text-red-500" : ""}>
+                        {userData?.collections.length === 0 ? "Can not create a request without a collection. Please create a collection first." : "Enter a name for your request to continue." }
                     </DialogDescription>
                 </DialogHeader>
                 <div className="grid gap-4 py-4">
@@ -41,11 +41,11 @@ const CreateReqModal: React.FC<Props> = ({ reqLoading, CreateRequest, reqData, o
                         <label htmlFor="name" className="text-right">
                             Name
                         </label>
-                        <Input onChange={handleReqChange} value={reqData.name} autoComplete="off" placeholder="Request name" name="name" id="name" className="col-span-3" />
+                        <Input disabled={userData?.collections.length === 0} onChange={handleReqChange} value={reqData.name} autoComplete="off" placeholder="Request name" name="name" id="name" className="col-span-3" />
                         <label htmlFor="collectionName">
                             Collection
                         </label>
-                        <Select value={reqData.collectionName} onValueChange={(value) => handleReqChange({ name: "collectionName", value })}>
+                        <Select disabled={userData?.collections.length === 0} value={reqData.collectionName} onValueChange={(value) => handleReqChange({ name: "collectionName", value })}>
                             <SelectTrigger className="col-span-3">
                                 <SelectValue placeholder="Select a collection" />
                             </SelectTrigger>

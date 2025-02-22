@@ -26,7 +26,7 @@ const requestSchema: Schema<IRequest> = new Schema({
     type: { type: String, default: 'http' },
     method: { type: String, default: 'GET' },
     URL: { type: String, default: '' },
-    headers: { type: Map, of: String, default: {} },
+    headers: { type: Map, of: String, default: { "Content-Type": "application/json" } },
     body: { type: Schema.Types.Mixed, default: '' },
 });
 

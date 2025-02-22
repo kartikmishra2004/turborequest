@@ -39,6 +39,6 @@ export interface FormData {
     type: string;
     method: string;
     URL: string;
-    headers?: Record<string, string | number | boolean | null | string[]>;
+    headers: Record<string, string | number | boolean | null | string[]>;
     body?: string;
 }
