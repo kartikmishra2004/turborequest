@@ -132,7 +132,7 @@ const Playground: React.FC<Props> = ({ sendLoading, response, handleHeaderDelete
                                     height="60vh"
                                     defaultLanguage="json"
                                     theme="vs-dark"
-                                    // @ts-ignore
+                                    // @ts-expect-error
                                     value={formData.method === "GET" ? null : formData.body}
                                     onChange={(value) => handleChange({ name: "body", value })}
                                     options={{
