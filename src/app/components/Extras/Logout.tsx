@@ -9,6 +9,7 @@ import {
     DialogTrigger,
     DialogClose,
 } from '@/components/ui/dialogMp';
+import { Tooltip, TooltipContent, TooltipTrigger } from '@/components/ui/tooltip';
 import { Power, TriangleAlert } from 'lucide-react';
 import { Variants, Transition } from 'motion/react';
 import { signOut } from "next-auth/react";
@@ -35,9 +36,16 @@ export default function Logout() {
 
     return (
         <Dialog variants={customVariants} transition={customTransition}>
-            <DialogTrigger>
-                <Power width={20} className='text-red-500' />
-            </DialogTrigger>
+            <Tooltip>
+                <DialogTrigger>
+                    <TooltipTrigger asChild>
+                        <Power width={20} className='text-red-500' />
+                    </TooltipTrigger>
+                </DialogTrigger>
+                <TooltipContent>
+                    <p>Logout</p>
+                </TooltipContent>
+            </Tooltip>
             <DialogContent className='w-full max-w-md bg-white p-6 dark:bg-zinc-900'>
                 <DialogHeader>
                     <DialogTitle className='text-zinc-900 dark:text-primary'>

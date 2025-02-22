@@ -49,7 +49,7 @@ export default function Navbar({ session }: NavbarProps) {
                             <Link href='/auth/login'>
                                 <Button size="sm" >Login</Button >
                             </Link> :
-                            <div className="w-max relative flex gap-4">
+                            <div className="w-max relative flex gap-6">
                                 <Button className="cursor-default" size='sm' variant='secondary'>
                                     <Image unoptimized src={session.user?.image || ''} width={20} height={20} className="rounded-full" alt="pfp" />
                                     {session.user?.name}
