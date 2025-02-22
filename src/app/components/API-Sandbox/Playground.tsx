@@ -164,7 +164,7 @@ const Playground: React.FC<Props> = ({ sendLoading, response, handleHeaderDelete
                 </div>
                 <div className="p-4">
                     <h3 className="font-medium mb-3">Response</h3>
-                    <CodeBlock language="jsx" filename={`${formData.name}.json`} highlightLines={[]} code={response} minHeight='[calc(100vh-14rem)]' />
+                    <CodeBlock language="jsx" filename={`${formData.name}.json`} highlightLines={[]} code={response} minHeight='68vh' />
                 </div>
             </div>
         </div>

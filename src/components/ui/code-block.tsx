@@ -56,10 +56,10 @@ export const CodeBlock = ({
     : highlightLines;
 
   return (
-    <div className={`relative w-full rounded-lg bg-zinc-900 border p-5 h-${minHeight} overflow-y-auto font-mono text-sm`}>
+    <div style={{ height: `${minHeight}` }} className={`relative w-full rounded-lg bg-zinc-900 border p-5 max-h-[calc(100vh-14rem)] overflow-y-auto font-mono text-sm`}>
       <div className="flex flex-col gap-2">
         {tabsExist && (
-          <div className="flex  overflow-x-auto">
+          <div className="flex overflow-x-auto">
             {tabs.map((tab, index) => (
               <button
                 key={index}

@@ -18,7 +18,7 @@ fetch("https://turborequest.vercel.app/api/dummy", {
 
   return (
     <div className="max-w-3xl mx-auto w-full">
-      <CodeBlock minHeight="max" language="jsx" filename="Sample.js" highlightLines={[11]} code={code} />
+      <CodeBlock minHeight="max-content" language="jsx" filename="Sample.js" highlightLines={[11]} code={code} />
     </div>
   );
 }
