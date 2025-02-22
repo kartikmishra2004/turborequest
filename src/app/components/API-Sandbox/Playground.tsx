@@ -32,9 +32,10 @@ type Props = {
     handleHeaderDelete: (params: string) => void;
     response: string;
     sendLoading: boolean;
+    saveLoading: boolean;
 }
 
-const Playground: React.FC<Props> = ({ sendLoading, response, handleHeaderDelete, handleHeader, headerKey, headerValue, setHeaderValue, setHeaderKey, saved, updateRequest, formData, handleChange, handleSend, activeTab, setActiveTab }) => {
+const Playground: React.FC<Props> = ({ saveLoading, sendLoading, response, handleHeaderDelete, handleHeader, headerKey, headerValue, setHeaderValue, setHeaderKey, saved, updateRequest, formData, handleChange, handleSend, activeTab, setActiveTab }) => {
     return (
         <div className="h-full flex flex-col">
             <div className="p-5 border-b">
@@ -71,8 +72,8 @@ const Playground: React.FC<Props> = ({ sendLoading, response, handleHeaderDelete
                     </Button>
                     <Tooltip>
                         <TooltipTrigger asChild>
-                            <Button disabled={saved} onClick={updateRequest} variant='secondary'>
-                                {saved ? <Check className="h-4 w-4" /> : <Save className="h-4 w-4" />}
+                            <Button disabled={saved || saveLoading} onClick={updateRequest} variant='secondary'>
+                                {saveLoading ? (<div className="loader invert"></div>) : (saved ? <Check className="h-4 w-4 mx-0.5" /> : <Save className="h-4 w-4 mx-0.5" />)}
                             </Button>
                         </TooltipTrigger>
                         <TooltipContent>

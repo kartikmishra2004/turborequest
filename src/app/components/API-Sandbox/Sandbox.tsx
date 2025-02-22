@@ -36,6 +36,7 @@ export default function Sandbox({ session }: SandBoxProps) {
     "message": "Your response will appear here!!"
 }`);
     const [sendLoading, setSendLoading] = useState<boolean>(false);
+    const [saveLoading, setSaveLoading] = useState<boolean>(false);
 
     useEffect(() => {
         async function fetchUser() {
@@ -97,6 +98,7 @@ export default function Sandbox({ session }: SandBoxProps) {
     }
 
     const updateRequest = async () => {
+        setSaveLoading(true);
         try {
             await fetch(`${process.env.NEXT_PUBLIC_API_URL}/api/request/update`, {
                 method: "PUT",
@@ -114,12 +116,14 @@ export default function Sandbox({ session }: SandBoxProps) {
                     body: formData.body,
                 }),
             });
+            setSaveLoading(false);
             setSaved(true);
             setRefresh(prev => !prev);
             setTimeout(() => {
                 setSaved(false);
             }, 2000);
         } catch {
+            setSaveLoading(false);
             console.log("Failed to update request!!");
         }
     }
@@ -211,7 +215,7 @@ export default function Sandbox({ session }: SandBoxProps) {
             <Sidebar setResponse={setResponse} formData={formData} openRequest={openRequest} setOpenReqModal={setOpenReqModal} setDialogOpen={setDialogOpen} loading={loading} userData={userData} toggleCollection={toggleCollection} openCollections={openCollections} setIsOpen={setIsOpen} />
             <div className="flex-1 flex flex-col">
                 <div className="flex-1 overflow-hidden">
-                    {isOpen ? (<Playground sendLoading={sendLoading} response={response} handleHeaderDelete={handleHeaderDelete} handleHeader={handleHeader} headerValue={headerValue} headerKey={headerKey} setHeaderValue={setHeaderValue} setHeaderKey={setHeaderKey} saved={saved} updateRequest={updateRequest} formData={formData} handleChange={handleChange} handleSend={handleSend} activeTab={activeTab} setActiveTab={setActiveTab} />) : (<Wellcome setOpenReqModal={setOpenReqModal} setDialogOpen={setDialogOpen} />)}
+                    {isOpen ? (<Playground saveLoading={saveLoading} sendLoading={sendLoading} response={response} handleHeaderDelete={handleHeaderDelete} handleHeader={handleHeader} headerValue={headerValue} headerKey={headerKey} setHeaderValue={setHeaderValue} setHeaderKey={setHeaderKey} saved={saved} updateRequest={updateRequest} formData={formData} handleChange={handleChange} handleSend={handleSend} activeTab={activeTab} setActiveTab={setActiveTab} />) : (<Wellcome setOpenReqModal={setOpenReqModal} setDialogOpen={setDialogOpen} />)}
                 </div>
             </div>
         </>
