@@ -12,13 +12,20 @@ type Props = {
     openCollections: Record<string, boolean>;
     setOpenReqModal: (params: boolean) => void;
     openRequest: (param1: FormData, param2: string) => void;
+    setResponse: (params: string) => void;
+    formData: FormData;
 }
 
-const Sidebar: React.FC<Props> = ({ openRequest, setOpenReqModal, setDialogOpen, loading, userData, toggleCollection, openCollections, setIsOpen }) => {
+const Sidebar: React.FC<Props> = ({ formData, setResponse, openRequest, setOpenReqModal, setDialogOpen, loading, userData, toggleCollection, openCollections, setIsOpen }) => {
 
     const handleOpen = (request: FormData, collName: string) => {
-        openRequest(request, collName)
+        openRequest(request, collName);
         setIsOpen(true);
+        if (formData.name !== request.name) {
+            setResponse(`{
+    "message": "Your response will appear here!!"
+}`)
+        }
     }
 
     return (
