@@ -132,8 +132,7 @@ const Playground: React.FC<Props> = ({ sendLoading, response, handleHeaderDelete
                                     height="60vh"
                                     defaultLanguage="json"
                                     theme="vs-dark"
-                                    // @ts-expect-error
-                                    value={formData.method === "GET" ? null : formData.body}
+                                    value={formData.body}
                                     onChange={(value) => handleChange({ name: "body", value })}
                                     options={{
                                         fontSize: 14,
@@ -141,6 +140,7 @@ const Playground: React.FC<Props> = ({ sendLoading, response, handleHeaderDelete
                                         scrollBeyondLastLine: false,
                                     }}
                                 />
+
                             </div> :
                                 <div className="h-[60vh] flex justify-center pt-4">
                                     <div className="w-full mb-8">

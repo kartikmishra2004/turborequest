@@ -183,25 +183,26 @@ export default function Sandbox({ session }: SandBoxProps) {
 
     // Method for calling the API
     const handleSend = async () => {
-        const data = {
+        const data: RequestInit = {
             method: formData.method,
-            headers: formData.headers,
+            headers: Object.fromEntries(
+                Object.entries(formData.headers).map(([key, value]) => [key, String(value)])
+            ) as Record<string, string>,
             body: formData.body === '' ? null : formData.body,
-        }
+        };
+
         setSendLoading(true);
         try {
-            // @ts-ignore
-            const resp = await fetch(`${formData.URL}`, data);
+            const resp = await fetch(formData.URL, data);
             const response = await resp.json();
-            const stringRes = JSON.stringify(response, null, 2);
-            setResponse(stringRes);
-            setSendLoading(false);
+            setResponse(JSON.stringify(response, null, 2));
         } catch (error) {
-            setSendLoading(false);
             console.log("Failed to send request!!", error);
+        } finally {
+            setSendLoading(false);
         }
+    };
 
-    }
 
     return (
         <>
