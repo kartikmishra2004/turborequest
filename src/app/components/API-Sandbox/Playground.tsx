@@ -6,7 +6,7 @@ import {
     SelectTrigger,
     SelectValue,
 } from "@/components/ui/select";
-import { Check, Save, Send } from "lucide-react";
+import { Check, Save, Send, Trash } from "lucide-react";
 import { cn } from "@/lib/utils";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { CodeBlock } from "@/components/ui/code-block";
@@ -29,9 +29,10 @@ type Props = {
     headerKey: string;
     headerValue: string;
     handleHeader: () => void;
+    handleHeaderDelete: (params: string) => void;
 }
 
-const Playground: React.FC<Props> = ({ handleHeader, headerKey, headerValue, setHeaderValue, setHeaderKey, saved, updateRequest, formData, handleChange, handleSend, activeTab, setActiveTab }) => {
+const Playground: React.FC<Props> = ({ handleHeaderDelete, handleHeader, headerKey, headerValue, setHeaderValue, setHeaderKey, saved, updateRequest, formData, handleChange, handleSend, activeTab, setActiveTab }) => {
     return (
         <div className="h-full flex flex-col">
             <div className="p-5 border-b">
@@ -99,20 +100,30 @@ const Playground: React.FC<Props> = ({ handleHeader, headerKey, headerValue, set
                                             <tr>
                                                 <th className="p-2 bg-zinc-900 border-b text-left">Key</th>
                                                 <th className="p-2 bg-zinc-900 border-b border-l text-left">Value</th>
+                                                <th className="p-2 bg-zinc-900 border-b border-l text-left"></th>
                                             </tr>
                                         </thead>
                                         <tbody>
-                                            {Object.entries(formData.headers).map(([key, value]) => (
-                                                <tr key={key}>
-                                                    <td className="p-2 border-t border-r bg-zinc-900 text-muted-foreground">{key}</td>
-                                                    <td className="p-2 border-t bg-zinc-900 text-muted-foreground">{value}</td>
-                                                </tr>
-                                            ))}
+                                            {Object.entries(formData.headers).map(([key, value]) => {
+                                                const stringValue = String(value);
+                                                return (
+                                                    <tr key={key}>
+                                                        <td className="p-2 border-t border-r bg-zinc-900 text-muted-foreground">{key}</td>
+                                                        <td className="p-2 border-t border-r bg-zinc-900 text-muted-foreground">
+                                                            {stringValue.length > 52 ? stringValue.slice(0, 52) + "..." : stringValue}
+                                                        </td>
+                                                        <td className="p-2 border-t bg-zinc-900 text-muted-foreground">
+                                                            <span className='cursor-pointer' onClick={() => handleHeaderDelete(key)}>
+                                                                <Trash className="h-4 w-4" />
+                                                            </span>
+                                                        </td>
+                                                    </tr>
+                                                );
+                                            })}
                                         </tbody>
                                     </table>
                                 </div>
                             </div>
-
                         </TabsContent>
                         <TabsContent value="body" className="p-4">
                             <div className="rounded-md overflow-hidden border">

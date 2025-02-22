@@ -164,20 +164,23 @@ export default function Sandbox({ session }: SandBoxProps) {
     }
 
     const handleHeader = () => {
-        if (headerKey.trim() !== "") {
-            setFormData((prev) => ({
-                ...prev,
-                headers: {
-                    ...prev.headers,
-                    [headerKey]: headerValue,
-                }
-            }))
-            setHeaderKey("");
-            setHeaderValue("");
-        } else {
-            alert("Key cannot be empty!");
-        }
+        setFormData((prev) => ({
+            ...prev,
+            headers: {
+                ...prev.headers,
+                [headerKey]: headerValue,
+            }
+        }))
+        setHeaderKey("");
+        setHeaderValue("");
     };
+
+    const handleHeaderDelete = (key: string) => {
+        setFormData((prev) => ({
+            ...prev,
+            headers: Object.fromEntries(Object.entries(prev.headers).filter(([k]) => k !== key)),
+        }));
+    }
 
     return (
         <>
@@ -186,7 +189,7 @@ export default function Sandbox({ session }: SandBoxProps) {
             <Sidebar openRequest={openRequest} setOpenReqModal={setOpenReqModal} setDialogOpen={setDialogOpen} loading={loading} userData={userData} toggleCollection={toggleCollection} openCollections={openCollections} setIsOpen={setIsOpen} />
             <div className="flex-1 flex flex-col">
                 <div className="flex-1 overflow-hidden">
-                    {isOpen ? (<Playground handleHeader={handleHeader} headerValue={headerValue} headerKey={headerKey} setHeaderValue={setHeaderValue} setHeaderKey={setHeaderKey} saved={saved} updateRequest={updateRequest} formData={formData} handleChange={handleChange} handleSend={handleSend} activeTab={activeTab} setActiveTab={setActiveTab} />) : (<Wellcome setOpenReqModal={setOpenReqModal} setDialogOpen={setDialogOpen} />)}
+                    {isOpen ? (<Playground handleHeaderDelete={handleHeaderDelete} handleHeader={handleHeader} headerValue={headerValue} headerKey={headerKey} setHeaderValue={setHeaderValue} setHeaderKey={setHeaderKey} saved={saved} updateRequest={updateRequest} formData={formData} handleChange={handleChange} handleSend={handleSend} activeTab={activeTab} setActiveTab={setActiveTab} />) : (<Wellcome setOpenReqModal={setOpenReqModal} setDialogOpen={setDialogOpen} />)}
                 </div>
             </div>
         </>
