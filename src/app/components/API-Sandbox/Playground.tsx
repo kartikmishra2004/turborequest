@@ -6,12 +6,12 @@ import {
     SelectTrigger,
     SelectValue,
 } from "@/components/ui/select";
-import { Check, Save, Send, Trash } from "lucide-react";
+import { AlertCircle, Check, Save, Send, Trash } from "lucide-react";
 import { cn } from "@/lib/utils";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { CodeBlock } from "@/components/ui/code-block";
 import Editor from "@monaco-editor/react";
-import { METHODS, PROTOCOLS, sampleResponse } from "@/constants";
+import { METHODS, PROTOCOLS } from "@/constants";
 import { Button } from '@/components/ui/button';
 import { FormData } from '@/type';
 import { Tooltip, TooltipContent, TooltipTrigger } from '@/components/ui/tooltip';
@@ -30,9 +30,11 @@ type Props = {
     headerValue: string;
     handleHeader: () => void;
     handleHeaderDelete: (params: string) => void;
+    response: string;
+    sendLoading: boolean;
 }
 
-const Playground: React.FC<Props> = ({ handleHeaderDelete, handleHeader, headerKey, headerValue, setHeaderValue, setHeaderKey, saved, updateRequest, formData, handleChange, handleSend, activeTab, setActiveTab }) => {
+const Playground: React.FC<Props> = ({ sendLoading, response, handleHeaderDelete, handleHeader, headerKey, headerValue, setHeaderValue, setHeaderKey, saved, updateRequest, formData, handleChange, handleSend, activeTab, setActiveTab }) => {
     return (
         <div className="h-full flex flex-col">
             <div className="p-5 border-b">
@@ -65,8 +67,7 @@ const Playground: React.FC<Props> = ({ handleHeaderDelete, handleHeader, headerK
                     )}
                     <input type="text" autoComplete="off" placeholder="Enter request URL" className="flex-1 px-3 py-2 rounded-md border bg-background" name="URL" value={formData.URL} onChange={handleChange} />
                     <Button onClick={handleSend}>
-                        <Send className="h-4 w-4" />
-                        Send
+                        {sendLoading ? (<div className="px-[1.15rem]"><div className="loader"></div></div>) : (<><Send className="h-4 w-4" />Send</>)}
                     </Button>
                     <Tooltip>
                         <TooltipTrigger asChild>
@@ -126,12 +127,13 @@ const Playground: React.FC<Props> = ({ handleHeaderDelete, handleHeader, headerK
                             </div>
                         </TabsContent>
                         <TabsContent value="body" className="p-4">
-                            <div className="rounded-md overflow-hidden border">
+                            {formData.method !== "GET" ? <div className="rounded-md overflow-hidden border">
                                 <Editor
                                     height="60vh"
                                     defaultLanguage="json"
                                     theme="vs-dark"
-                                    value={formData.body}
+                                    // @ts-ignore
+                                    value={formData.method === "GET" ? null : formData.body}
                                     onChange={(value) => handleChange({ name: "body", value })}
                                     options={{
                                         fontSize: 14,
@@ -139,13 +141,30 @@ const Playground: React.FC<Props> = ({ handleHeaderDelete, handleHeader, headerK
                                         scrollBeyondLastLine: false,
                                     }}
                                 />
-                            </div>
+                            </div> :
+                                <div className="h-[60vh] flex justify-center pt-4">
+                                    <div className="w-full mb-8">
+                                        <div className="flex items-start gap-4">
+                                            <AlertCircle className="h-5 w-5 text-foreground mt-0.5" />
+                                            <div className="flex-1">
+                                                <h3 className="text-foreground text-lg font-semibold mb-2">
+                                                    GET Request Warning
+                                                </h3>
+                                                <p className="text-muted-foreground text-sm leading-relaxed">
+                                                    GET requests should not include a request body. While some clients may allow it,
+                                                    the HTTP specification does not support request bodies for GET methods.
+                                                </p>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            }
                         </TabsContent>
                     </Tabs>
                 </div>
                 <div className="p-4">
                     <h3 className="font-medium mb-3">Response</h3>
-                    <CodeBlock language="jsx" filename="Login.json" highlightLines={[]} code={sampleResponse} />
+                    <CodeBlock language="jsx" filename={`${formData.name}.json`} highlightLines={[]} code={response} minHeight='[calc(100vh-14rem)]' />
                 </div>
             </div>
         </div>

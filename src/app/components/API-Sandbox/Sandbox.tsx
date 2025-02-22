@@ -32,6 +32,10 @@ export default function Sandbox({ session }: SandBoxProps) {
     const [saved, setSaved] = useState<boolean>(false);
     const [headerKey, setHeaderKey] = useState<string>("");
     const [headerValue, setHeaderValue] = useState<string>("");
+    const [response, setResponse] = useState<string>(`{
+    "message": "Your response will appear here!!"
+}`);
+    const [sendLoading, setSendLoading] = useState<boolean>(false);
 
     useEffect(() => {
         async function fetchUser() {
@@ -158,11 +162,6 @@ export default function Sandbox({ session }: SandBoxProps) {
         }
     };
 
-    const handleSend = () => {
-        const data = formData;
-        console.log(data);
-    }
-
     const handleHeader = () => {
         setFormData((prev) => ({
             ...prev,
@@ -182,6 +181,28 @@ export default function Sandbox({ session }: SandBoxProps) {
         }));
     }
 
+    // Method for calling the API
+    const handleSend = async () => {
+        const data = {
+            method: formData.method,
+            headers: formData.headers,
+            body: formData.body === '' ? null : formData.body,
+        }
+        setSendLoading(true);
+        try {
+            // @ts-ignore
+            const resp = await fetch(`${formData.URL}`, data);
+            const response = await resp.json();
+            const stringRes = JSON.stringify(response, null, 2);
+            setResponse(stringRes);
+            setSendLoading(false);
+        } catch (error) {
+            setSendLoading(false);
+            console.log("Failed to send request!!", error);
+        }
+
+    }
+
     return (
         <>
             <CreateReqModal reqLoading={reqLoading} CreateRequest={CreateRequest} reqData={reqData} handleReqChange={handleReqChange} userData={userData} openReqModal={openReqModal} setOpenReqModal={setOpenReqModal} />
@@ -189,7 +210,7 @@ export default function Sandbox({ session }: SandBoxProps) {
             <Sidebar openRequest={openRequest} setOpenReqModal={setOpenReqModal} setDialogOpen={setDialogOpen} loading={loading} userData={userData} toggleCollection={toggleCollection} openCollections={openCollections} setIsOpen={setIsOpen} />
             <div className="flex-1 flex flex-col">
                 <div className="flex-1 overflow-hidden">
-                    {isOpen ? (<Playground handleHeaderDelete={handleHeaderDelete} handleHeader={handleHeader} headerValue={headerValue} headerKey={headerKey} setHeaderValue={setHeaderValue} setHeaderKey={setHeaderKey} saved={saved} updateRequest={updateRequest} formData={formData} handleChange={handleChange} handleSend={handleSend} activeTab={activeTab} setActiveTab={setActiveTab} />) : (<Wellcome setOpenReqModal={setOpenReqModal} setDialogOpen={setDialogOpen} />)}
+                    {isOpen ? (<Playground sendLoading={sendLoading} response={response} handleHeaderDelete={handleHeaderDelete} handleHeader={handleHeader} headerValue={headerValue} headerKey={headerKey} setHeaderValue={setHeaderValue} setHeaderKey={setHeaderKey} saved={saved} updateRequest={updateRequest} formData={formData} handleChange={handleChange} handleSend={handleSend} activeTab={activeTab} setActiveTab={setActiveTab} />) : (<Wellcome setOpenReqModal={setOpenReqModal} setDialogOpen={setDialogOpen} />)}
                 </div>
             </div>
         </>

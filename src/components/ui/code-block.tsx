@@ -7,6 +7,7 @@ import { IconCheck, IconCopy } from "@tabler/icons-react";
 type CodeBlockProps = {
   language: string;
   filename: string;
+  minHeight: string,
   highlightLines?: number[];
 } & (
     | {
@@ -25,6 +26,7 @@ type CodeBlockProps = {
   );
 
 export const CodeBlock = ({
+  minHeight,
   language,
   filename,
   code,
@@ -54,7 +56,7 @@ export const CodeBlock = ({
     : highlightLines;
 
   return (
-    <div className="relative w-full rounded-lg bg-zinc-900 border p-5 max-h-[calc(100vh-14rem)] overflow-y-auto font-mono text-sm">
+    <div className={`relative w-full rounded-lg bg-zinc-900 border p-5 h-${minHeight} overflow-y-auto font-mono text-sm`}>
       <div className="flex flex-col gap-2">
         {tabsExist && (
           <div className="flex  overflow-x-auto">
