@@ -115,9 +115,16 @@ const Playground: React.FC<Props> = ({ saveLoading, sendLoading, response, handl
                                                             {stringValue.length > 52 ? stringValue.slice(0, 52) + "..." : stringValue}
                                                         </td>
                                                         <td className="p-2 w-4 border-t bg-zinc-900 text-muted-foreground">
-                                                            <span className='cursor-pointer' onClick={() => handleHeaderDelete(key)}>
-                                                                <Trash className="h-4 w-4" />
-                                                            </span>
+                                                            <Tooltip>
+                                                                <TooltipTrigger asChild>
+                                                                    <span className='cursor-pointer' onClick={() => handleHeaderDelete(key)}>
+                                                                        <Trash className="h-4 w-4" />
+                                                                    </span>
+                                                                </TooltipTrigger>
+                                                                <TooltipContent>
+                                                                    <p>Delete field</p>
+                                                                </TooltipContent>
+                                                            </Tooltip>
                                                         </td>
                                                     </tr>
                                                 );
@@ -168,7 +175,7 @@ const Playground: React.FC<Props> = ({ saveLoading, sendLoading, response, handl
                     <CodeBlock language="jsx" filename={`${formData.name}.json`} highlightLines={[]} code={response} minHeight='68vh' />
                 </div>
             </div>
-        </div>
+        </div >
     )
 }
 

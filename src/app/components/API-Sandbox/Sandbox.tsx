@@ -13,7 +13,7 @@ interface SandBoxProps {
     session?: Partial<Session> | null,
 }
 import { MultiStepLoader as Loader } from "@/components/ui/multi-step-loader";
-import { loadingStates } from "@/constants";
+import { loadingStates, sampleResponse } from "@/constants";
 
 export default function Sandbox({ session }: SandBoxProps) {
 
@@ -33,9 +33,7 @@ export default function Sandbox({ session }: SandBoxProps) {
     const [saved, setSaved] = useState<boolean>(false);
     const [headerKey, setHeaderKey] = useState<string>("");
     const [headerValue, setHeaderValue] = useState<string>("");
-    const [response, setResponse] = useState<string>(`{
-    "message": "Your response will appear here!!"
-}`);
+    const [response, setResponse] = useState<string>(sampleResponse);
     const [sendLoading, setSendLoading] = useState<boolean>(false);
     const [saveLoading, setSaveLoading] = useState<boolean>(false);
     const [sandLoading, setSandLoading] = useState<boolean>(true);
