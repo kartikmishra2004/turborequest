@@ -114,7 +114,7 @@ const Playground: React.FC<Props> = ({ saveLoading, sendLoading, response, handl
                                                         <td className="p-2 border-t border-r bg-zinc-900 text-muted-foreground">
                                                             {stringValue.length > 52 ? stringValue.slice(0, 52) + "..." : stringValue}
                                                         </td>
-                                                        <td className="p-2 border-t bg-zinc-900 text-muted-foreground">
+                                                        <td className="p-2 w-4 border-t bg-zinc-900 text-muted-foreground">
                                                             <span className='cursor-pointer' onClick={() => handleHeaderDelete(key)}>
                                                                 <Trash className="h-4 w-4" />
                                                             </span>

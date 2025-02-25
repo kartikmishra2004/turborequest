@@ -11,21 +11,14 @@ export const PROTOCOLS = [
     { value: "graphql", label: "GraphQL" },
 ];
 
-export const sampleResponse = `
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-    `
+export const loadingStates = [
+    {
+      text: "Setting up environment",
+    },
+    {
+      text: "Connecting to server",
+    },
+    {
+      text: "Preparing UI",
+    }
+  ];

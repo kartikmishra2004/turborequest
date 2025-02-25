@@ -12,11 +12,12 @@ import CreateReqModal from "./CreateReqModal";
 interface SandBoxProps {
     session?: Partial<Session> | null,
 }
+import { MultiStepLoader as Loader } from "@/components/ui/multi-step-loader";
+import { loadingStates } from "@/constants";
 
 export default function Sandbox({ session }: SandBoxProps) {
 
     const { getData, loading } = useAuth();
-    const [openCollections, setOpenCollections] = useState<Record<string, boolean>>({});
     const [userData, setUserData] = useState<User>(null);
     const [refresh, setRefresh] = useState<boolean>(false);
     const [activeTab, setActiveTab] = useState<string>("headers");
@@ -37,6 +38,7 @@ export default function Sandbox({ session }: SandBoxProps) {
 }`);
     const [sendLoading, setSendLoading] = useState<boolean>(false);
     const [saveLoading, setSaveLoading] = useState<boolean>(false);
+    const [sandLoading, setSandLoading] = useState<boolean>(true);
 
     useEffect(() => {
         async function fetchUser() {
@@ -47,14 +49,20 @@ export default function Sandbox({ session }: SandBoxProps) {
         // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [refresh]);
 
-    const toggleCollection = (id: string) => {
-        setOpenCollections((prev) => ({
-            ...prev,
-            [id]: !prev[id],
-        }));
-    };
+    useEffect(() => {
+        const form = localStorage.getItem("form-data");
+        const parsedData = JSON.parse(form!);
+        if (form) {
+            setFormData(parsedData);
+            setIsOpen(true);
+        }
+        setTimeout(() => {
+            setSandLoading(false);
+        }, 3000);
+    }, [])
 
     const openRequest = (request: FormData, collName: string) => {
+        localStorage.setItem("form-data", JSON.stringify(request));
         setFormData(request);
         setOpenCol(collName);
     }
@@ -117,6 +125,7 @@ export default function Sandbox({ session }: SandBoxProps) {
                 }),
             });
             setSaveLoading(false);
+            localStorage.setItem("form-data", JSON.stringify(formData));
             setSaved(true);
             setRefresh(prev => !prev);
             setTimeout(() => {
@@ -212,10 +221,10 @@ export default function Sandbox({ session }: SandBoxProps) {
         <>
             <CreateReqModal reqLoading={reqLoading} CreateRequest={CreateRequest} reqData={reqData} handleReqChange={handleReqChange} userData={userData} openReqModal={openReqModal} setOpenReqModal={setOpenReqModal} />
             <CreateColModal colLoading={colLoading} dialogOpen={dialogOpen} setDialogOpen={setDialogOpen} handleCollData={handleCollData} collData={collData} CreateCollection={CreateCollection} />
-            <Sidebar setResponse={setResponse} formData={formData} openRequest={openRequest} setOpenReqModal={setOpenReqModal} setDialogOpen={setDialogOpen} loading={loading} userData={userData} toggleCollection={toggleCollection} openCollections={openCollections} setIsOpen={setIsOpen} />
+            <Sidebar setResponse={setResponse} formData={formData} openRequest={openRequest} setOpenReqModal={setOpenReqModal} setDialogOpen={setDialogOpen} loading={loading} userData={userData} setIsOpen={setIsOpen} />
             <div className="flex-1 flex flex-col">
                 <div className="flex-1 overflow-hidden">
-                    {isOpen ? (<Playground saveLoading={saveLoading} sendLoading={sendLoading} response={response} handleHeaderDelete={handleHeaderDelete} handleHeader={handleHeader} headerValue={headerValue} headerKey={headerKey} setHeaderValue={setHeaderValue} setHeaderKey={setHeaderKey} saved={saved} updateRequest={updateRequest} formData={formData} handleChange={handleChange} handleSend={handleSend} activeTab={activeTab} setActiveTab={setActiveTab} />) : (<Wellcome setOpenReqModal={setOpenReqModal} setDialogOpen={setDialogOpen} />)}
+                    {sandLoading ? (<Loader loadingStates={loadingStates} loading={sandLoading} duration={1000} />) : (isOpen ? (<Playground saveLoading={saveLoading} sendLoading={sendLoading} response={response} handleHeaderDelete={handleHeaderDelete} handleHeader={handleHeader} headerValue={headerValue} headerKey={headerKey} setHeaderValue={setHeaderValue} setHeaderKey={setHeaderKey} saved={saved} updateRequest={updateRequest} formData={formData} handleChange={handleChange} handleSend={handleSend} activeTab={activeTab} setActiveTab={setActiveTab} />) : (<Wellcome setOpenReqModal={setOpenReqModal} setDialogOpen={setDialogOpen} />))}
                 </div>
             </div>
         </>
