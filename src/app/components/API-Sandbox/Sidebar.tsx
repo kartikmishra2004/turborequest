@@ -86,7 +86,7 @@ const Sidebar: React.FC<Props> = ({
                     <div className="min-h-[calc(100vh-10rem)] text-muted-foreground flex justify-center items-center">
                         <span className="w-10 h-10 border-t-2 animate-spin border-primary rounded-full"></span>
                     </div>
-                ) : userData?.collections?.length! > 0 ? (
+                ) : userData?.collections && userData?.collections.length > 0 ? (
                     userData?.collections.map((item) => (
                         <div key={item._id}>
                             <div
