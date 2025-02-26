@@ -111,7 +111,7 @@ const Sidebar: React.FC<Props> = ({
                                             } rounded-sm cursor-pointer text-sm transition-colors duration-200`}
                                     >
                                         <FileJson className="h-4 w-4 shrink-0 text-muted-foreground" />{" "}
-                                        {request.name.length > 15 ? request.name.slice(0, 15) + "..." : request.name}
+                                        {request.name.length > 15 ? request.name.slice(0, 15) + "..." : request.name}<span className={`${request.method === "GET" ? 'text-green-400' : ''} ${request.method === "POST" ? 'text-blue-400' : ''} ${request.method === "PUT" ? 'text-yellow-400' : ''} ${request.method === "DELETE" ? 'text-red-400' : ''}`}>({request.method})</span>
                                     </div>
                                 ))}
                         </div>
