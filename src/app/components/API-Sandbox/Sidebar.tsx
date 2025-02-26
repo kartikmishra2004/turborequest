@@ -104,15 +104,21 @@ const Sidebar: React.FC<Props> = ({
                             {openCollections[item._id] &&
                                 item.requests.length > 0 &&
                                 item.requests.map((request) => (
-                                    <div
-                                        onClick={() => handleOpen(request, item.name)}
-                                        key={request._id}
-                                        className={`pl-10 flex items-center gap-2 px-2 py-1.5 hover:bg-accent/50 ${formData.name === request.name ? "bg-accent/50" : ""
-                                            } rounded-sm cursor-pointer text-sm transition-colors duration-200`}
-                                    >
-                                        <FileJson className="h-4 w-4 shrink-0 text-muted-foreground" />{" "}
-                                        {request.name.length > 15 ? request.name.slice(0, 15) + "..." : request.name}<span className={`${request.method === "GET" ? 'text-green-400' : ''} ${request.method === "POST" ? 'text-blue-400' : ''} ${request.method === "PUT" ? 'text-yellow-400' : ''} ${request.method === "DELETE" ? 'text-red-400' : ''}`}>({request.method})</span>
-                                    </div>
+                                    <Tooltip key={request._id}>
+                                        <TooltipTrigger asChild>
+                                            <div
+                                                onClick={() => handleOpen(request, item.name)}
+                                                className={`pl-10 flex items-center gap-2 px-2 py-1.5 hover:bg-accent/50 ${formData.name === request.name ? "bg-accent/50" : ""
+                                                    } rounded-sm cursor-pointer text-sm transition-colors duration-200`}
+                                            >
+                                                <FileJson className={`h-4 w-4 shrink-0 ${request.method === "GET" ? 'text-green-400' : ''} ${request.method === "POST" ? 'text-blue-400' : ''} ${request.method === "PUT" ? 'text-yellow-400' : ''} ${request.method === "DELETE" ? 'text-red-400' : ''}`} />{" "}
+                                                {request.name.length > 15 ? request.name.slice(0, 15) + "..." : request.name}
+                                            </div>
+                                        </TooltipTrigger>
+                                        <TooltipContent side="right">
+                                            <p>{request.name}</p>
+                                        </TooltipContent>
+                                    </Tooltip>
                                 ))}
                         </div>
                     ))
