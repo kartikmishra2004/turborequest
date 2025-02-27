@@ -38,7 +38,7 @@ type Props = {
 }
 
 const Playground: React.FC<Props> = ({ respError, respStatus, saveLoading, sendLoading, response, handleHeaderDelete, handleHeader, headerKey, headerValue, setHeaderValue, setHeaderKey, saved, updateRequest, formData, handleChange, handleSend, activeTab, setActiveTab }) => {
-    let responseError = respError ? `//Failed to send request!!
+    const responseError = respError ? `//Failed to send request!!
 ${respError}` : null;
     return (
         <div className="h-full flex flex-col">
