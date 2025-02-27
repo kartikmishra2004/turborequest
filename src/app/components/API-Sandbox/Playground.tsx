@@ -33,13 +33,17 @@ type Props = {
     response: string;
     sendLoading: boolean;
     saveLoading: boolean;
+    respStatus: number | null;
+    respError: string | unknown;
 }
 
-const Playground: React.FC<Props> = ({ saveLoading, sendLoading, response, handleHeaderDelete, handleHeader, headerKey, headerValue, setHeaderValue, setHeaderKey, saved, updateRequest, formData, handleChange, handleSend, activeTab, setActiveTab }) => {
+const Playground: React.FC<Props> = ({ respError, respStatus, saveLoading, sendLoading, response, handleHeaderDelete, handleHeader, headerKey, headerValue, setHeaderValue, setHeaderKey, saved, updateRequest, formData, handleChange, handleSend, activeTab, setActiveTab }) => {
+    let responseError = respError ? `//Failed to send request!!
+${respError}` : null;
     return (
         <div className="h-full flex flex-col">
             <div className="p-5 border-b">
-                <div className="flex gap-4 mb-4">
+                <div className="flex gap-4">
                     <Select value={formData.type} onValueChange={(value) => handleChange({ name: "type", value })}>
                         <SelectTrigger className="w-[180px]">
                             <SelectValue />
@@ -171,11 +175,14 @@ const Playground: React.FC<Props> = ({ saveLoading, sendLoading, response, handl
                     </Tabs>
                 </div>
                 <div className="p-4">
-                    <h3 className="font-medium mb-3">Response</h3>
-                    <CodeBlock language="jsx" filename={`${formData.name}.json`} highlightLines={[]} code={response} minHeight='68vh' />
+                    <div className="flex justify-between">
+                        <h3 className="font-medium mb-3">Response</h3>
+                        <h3 className={`font-medium mb-3 ${respError ? 'text-red-400' : (respStatus! < 300 ? "text-green-400" : respStatus! < 400 ? "text-blue-400" : respStatus! < 500 ? "text-red-400" : "text-yellow-400")}`}>{!respError ? respStatus : "404"}</h3>
+                    </div>
+                    <CodeBlock language="jsx" filename={`${formData.name}.json`} highlightLines={[]} code={responseError || response} minHeight='68vh' />
                 </div>
             </div>
-        </div >
+        </div>
     )
 }
 
