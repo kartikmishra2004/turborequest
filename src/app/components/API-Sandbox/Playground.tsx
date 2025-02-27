@@ -94,13 +94,13 @@ ${respError}` : null;
                             <TabsTrigger value="body">Body</TabsTrigger>
                         </TabsList>
                         <TabsContent value="headers" className="p-4">
-                            <div className="grid grid-cols-[1fr,1fr,auto] gap-2">
+                            <div className="flex xl:flex-row flex-col gap-2">
                                 <input value={headerKey} onChange={(e) => setHeaderKey(e.target.value)} type="text" placeholder="Key" className="px-3 py-1 rounded-md border bg-background text-sm" />
                                 <input value={headerValue} onChange={(e) => setHeaderValue(e.target.value)} type="text" placeholder="Value" className="px-3 py-1 rounded-md border bg-background text-sm" />
                                 <Button disabled={!headerKey || !headerValue} variant="outline" size="sm" onClick={handleHeader}>Add</Button>
                             </div>
                             <div className="pt-5">
-                                <div className="max-h-[calc(100vh-19rem)] overflow-y-auto border rounded-lg">
+                                <div className="max-h-[calc(100vh-18rem)] overflow-y-auto border rounded-lg">
                                     <table className="w-full border-collapse text-sm">
                                         <thead className="text-primary sticky top-0">
                                             <tr>
@@ -141,7 +141,7 @@ ${respError}` : null;
                         <TabsContent value="body" className="p-4">
                             {formData.method !== "GET" ? <div className="rounded-md overflow-hidden border">
                                 <Editor
-                                    height="60vh"
+                                    height="66.5vh"
                                     defaultLanguage="json"
                                     theme="vs-dark"
                                     value={formData.body}
@@ -179,7 +179,7 @@ ${respError}` : null;
                         <h3 className="font-medium mb-3">Response</h3>
                         <h3 className={`font-medium mb-3 ${respError ? 'text-red-400' : (respStatus! < 300 ? "text-green-400" : respStatus! < 400 ? "text-blue-400" : respStatus! < 500 ? "text-red-400" : "text-yellow-400")}`}>{!respError ? respStatus : "404"}</h3>
                     </div>
-                    <CodeBlock language="jsx" filename={`${formData.name}.json`} highlightLines={[]} code={responseError || response} minHeight='68vh' />
+                    <CodeBlock language="jsx" filename={`${formData.name}.json`} highlightLines={[]} code={responseError || response} minHeight='100vh' />
                 </div>
             </div>
         </div>

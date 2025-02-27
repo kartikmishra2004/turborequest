@@ -57,7 +57,7 @@ export const CodeBlock = ({
     : highlightLines;
 
   return (
-    <div style={{ height: `${minHeight}` }} className={`relative w-full rounded-lg bg-zinc-900 border p-5 max-h-[calc(100vh-14rem)] overflow-y-auto font-mono text-sm`}>
+    <div style={{ height: `${minHeight}` }} className={`relative w-full rounded-lg bg-zinc-900 border p-5 max-h-[calc(100vh-13rem)] overflow-y-auto font-mono text-sm`}>
       <div className="flex flex-col gap-2">
         {tabsExist && (
           <div className="flex overflow-x-auto">
