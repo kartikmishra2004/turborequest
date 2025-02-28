@@ -6,7 +6,7 @@ import {
     SelectTrigger,
     SelectValue,
 } from "@/components/ui/select";
-import { AlertCircle, Check, Save, Send, Trash } from "lucide-react";
+import { AlertCircle, Check, Save, Send, Trash, X } from "lucide-react";
 import { cn } from "@/lib/utils";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { CodeBlock } from "@/components/ui/code-block";
@@ -35,9 +35,10 @@ type Props = {
     saveLoading: boolean;
     respStatus: number | null;
     respError: string | unknown;
+    handleCloseRequest: () => void;
 }
 
-const Playground: React.FC<Props> = ({ respError, respStatus, saveLoading, sendLoading, response, handleHeaderDelete, handleHeader, headerKey, headerValue, setHeaderValue, setHeaderKey, saved, updateRequest, formData, handleChange, handleSend, activeTab, setActiveTab }) => {
+const Playground: React.FC<Props> = ({ handleCloseRequest, respError, respStatus, saveLoading, sendLoading, response, handleHeaderDelete, handleHeader, headerKey, headerValue, setHeaderValue, setHeaderKey, saved, updateRequest, formData, handleChange, handleSend, activeTab, setActiveTab }) => {
     const responseError = respError ? `//Failed to send request!!
 ${respError}` : null;
     return (
@@ -84,6 +85,14 @@ ${respError}` : null;
                             <p>Save request</p>
                         </TooltipContent>
                     </Tooltip>
+                    <Tooltip>
+                        <TooltipTrigger asChild>
+                            <X onClick={handleCloseRequest} className="h-5 w-5 mt-2 cursor-pointer text-muted-foreground hover:text-primary" />
+                        </TooltipTrigger>
+                        <TooltipContent>
+                            <p>Close request</p>
+                        </TooltipContent>
+                    </Tooltip>
                 </div>
             </div>
             <div className="flex-1 grid grid-cols-2 divide-x overflow-hidden">
@@ -116,7 +125,7 @@ ${respError}` : null;
                                                     <tr key={key}>
                                                         <td className="p-2 border-t border-r bg-zinc-900 text-muted-foreground">{key}</td>
                                                         <td className="p-2 border-t border-r bg-zinc-900 text-muted-foreground">
-                                                            {stringValue.length > 52 ? stringValue.slice(0, 52) + "..." : stringValue}
+                                                            {stringValue.length > 45 ? stringValue.slice(0, 45) + "..." : stringValue}
                                                         </td>
                                                         <td className="p-2 w-4 border-t bg-zinc-900 text-muted-foreground">
                                                             <Tooltip>

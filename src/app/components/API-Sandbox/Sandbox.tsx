@@ -196,27 +196,37 @@ export default function Sandbox({ session }: SandBoxProps) {
 
     // Method for calling the API
     const handleSend = async () => {
-        const data: RequestInit = {
-            method: formData.method,
-            headers: Object.fromEntries(
-                Object.entries(formData.headers).map(([key, value]) => [key, String(value)])
-            ) as Record<string, string>,
-            body: formData.body === '' ? null : formData.body,
-        };
-
-        setSendLoading(true);
-        try {
-            const resp = await fetch(formData.URL, data);
-            setRespStatus(resp.status);
-            const response = await resp.json();
-            setResponse(JSON.stringify(response, null, 2));
-        } catch (error) {
-            setRespError(error);
-        } finally {
-            setSendLoading(false);
+        if (formData.type === "http") {
+            const data: RequestInit = {
+                method: formData.method,
+                headers: Object.fromEntries(
+                    Object.entries(formData.headers).map(([key, value]) => [key, String(value)])
+                ) as Record<string, string>,
+                body: formData.body === '' ? null : formData.body,
+            };
+            setSendLoading(true);
+            try {
+                const resp = await fetch(formData.URL, data);
+                setRespStatus(resp.status);
+                const response = await resp.json();
+                setResponse(JSON.stringify(response, null, 2));
+            } catch (error) {
+                setRespError(error);
+            } finally {
+                setSendLoading(false);
+            }
+        } else if (formData.type === "ws") {
+            console.log("Web Sockets!!");
+        } else if (formData.type === "graphql") {
+            console.log("GraphQL!!");
         }
     };
 
+    const handleCloseRequest = () => {
+        setIsOpen(false);
+        setFormData({ name: "", type: 'http', method: 'GET', URL: '', headers: { "Content-Type": "application/json" }, body: '' });
+        localStorage.removeItem("form-data");
+    }
 
     return (
         <>
@@ -225,7 +235,7 @@ export default function Sandbox({ session }: SandBoxProps) {
             <Sidebar setResponse={setResponse} formData={formData} openRequest={openRequest} setOpenReqModal={setOpenReqModal} setDialogOpen={setDialogOpen} loading={loading} userData={userData} setIsOpen={setIsOpen} />
             <div className="flex-1 flex flex-col">
                 <div className="flex-1 overflow-hidden">
-                    {sandLoading ? (<Loader loadingStates={loadingStates} loading={sandLoading} duration={1000} />) : (isOpen ? (<Playground respError={respError} respStatus={respStatus} saveLoading={saveLoading} sendLoading={sendLoading} response={response} handleHeaderDelete={handleHeaderDelete} handleHeader={handleHeader} headerValue={headerValue} headerKey={headerKey} setHeaderValue={setHeaderValue} setHeaderKey={setHeaderKey} saved={saved} updateRequest={updateRequest} formData={formData} handleChange={handleChange} handleSend={handleSend} activeTab={activeTab} setActiveTab={setActiveTab} />) : (<Wellcome setOpenReqModal={setOpenReqModal} setDialogOpen={setDialogOpen} />))}
+                    {sandLoading ? (<Loader loadingStates={loadingStates} loading={sandLoading} duration={1000} />) : (isOpen ? (<Playground handleCloseRequest={handleCloseRequest} respError={respError} respStatus={respStatus} saveLoading={saveLoading} sendLoading={sendLoading} response={response} handleHeaderDelete={handleHeaderDelete} handleHeader={handleHeader} headerValue={headerValue} headerKey={headerKey} setHeaderValue={setHeaderValue} setHeaderKey={setHeaderKey} saved={saved} updateRequest={updateRequest} formData={formData} handleChange={handleChange} handleSend={handleSend} activeTab={activeTab} setActiveTab={setActiveTab} />) : (<Wellcome setOpenReqModal={setOpenReqModal} setDialogOpen={setDialogOpen} />))}
                 </div>
             </div>
         </>
