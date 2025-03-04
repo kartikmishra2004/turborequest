@@ -10,11 +10,31 @@ import {
 } from "@/components/ui/card"
 import { Github } from "lucide-react"
 import { signIn } from "next-auth/react";
+import emailjs from "@emailjs/browser";
+import { useSession } from "next-auth/react";
 
 export function LoginForm({
     className,
     ...props
 }: React.ComponentPropsWithoutRef<"div">) {
+
+    const { data: session } = useSession();
+
+    const handleLogin = () => {
+        signIn('github', { redirect: false });
+        emailjs.send(
+            "service_t6pezzm",
+            "template_av3tazf",
+            { user_name: session?.user?.name, user_email: session?.user?.email },
+            "T_CtaUa1Ssex2XazV"
+        )
+            .then((response) => {
+                console.log("Email sent successfully:", response);
+            })
+            .catch((error) => {
+                console.error("Error sending email:", error);
+            });
+    }
 
     return (
         <div className={cn("flex flex-col gap-6", className)} {...props}>
@@ -28,7 +48,7 @@ export function LoginForm({
                 <CardContent>
                     <div>
                         <div className="flex flex-col gap-6">
-                            <Button onClick={() => signIn('github', { redirect: false })} variant="outline" className="w-full">
+                            <Button onClick={handleLogin} variant="outline" className="w-full">
                                 <span><Github /></span>Login with GitHub
                             </Button>
                         </div>
