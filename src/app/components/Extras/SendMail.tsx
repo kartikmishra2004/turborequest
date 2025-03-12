@@ -19,19 +19,21 @@ export default function SendMail() {
                 const response = await res.json();
                 if (response.isNewUser === true) {
                     try {
-                        await emailjs.send(
+                        const emailRes = await emailjs.send(
                             process.env.NEXT_PUBLIC_EMAIL_SERVICE_ID!,
                             process.env.NEXT_PUBLIC_EMAIL_TEMPLATE_ID!,
                             { user_name: session?.user?.name, user_email: session?.user?.email },
                             process.env.NEXT_PUBLIC_EMAIL_PUBLIC_KEY
                         )
-                        await fetch(`${process.env.NEXT_PUBLIC_API_URL}/api/auth/update-new-user-state`, {
-                            method: "PUT",
-                            headers: { "Content-Type": "application/json" },
-                            body: JSON.stringify({
-                                email: session?.user?.email,
-                            }),
-                        })
+                        if (emailRes.status === 200) {
+                            await fetch(`${process.env.NEXT_PUBLIC_API_URL}/api/auth/update-new-user-state`, {
+                                method: "PUT",
+                                headers: { "Content-Type": "application/json" },
+                                body: JSON.stringify({
+                                    email: session?.user?.email,
+                                }),
+                            })
+                        }
                     } catch (error) {
                         console.error("Error sending email:", error);
                     }
