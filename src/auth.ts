@@ -13,6 +13,7 @@ export const { auth, handlers, signIn, signOut } = NextAuth({
             email: user.email,
             fullName: user.name,
             photoURL: user.image,
+            isNewUser: true,
           }),
         });
       } catch (error) {

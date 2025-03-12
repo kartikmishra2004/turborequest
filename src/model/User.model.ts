@@ -19,6 +19,7 @@ interface IUser extends Document {
     email: string;
     photoURL: string;
     collections: ICollection[];
+    isNewUser: boolean;
 }
 
 const requestSchema: Schema<IRequest> = new Schema({
@@ -40,6 +41,7 @@ const userSchema: Schema<IUser> = new Schema({
     email: { type: String, required: true, unique: true },
     photoURL: { type: String },
     collections: { type: [collectionSchema], required: true },
+    isNewUser: { type: Boolean, default: true }
 });
 
 const User = (mongoose.models.User as mongoose.Model<IUser>) || mongoose.model<IUser>("User", userSchema);

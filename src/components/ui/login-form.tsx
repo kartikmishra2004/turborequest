@@ -10,30 +10,14 @@ import {
 } from "@/components/ui/card"
 import { Github } from "lucide-react"
 import { signIn } from "next-auth/react";
-import emailjs from "@emailjs/browser";
-import { useSession } from "next-auth/react";
 
 export function LoginForm({
     className,
     ...props
 }: React.ComponentPropsWithoutRef<"div">) {
 
-    const { data: session } = useSession();
-
     const handleLogin = () => {
         signIn('github', { redirect: false });
-        emailjs.send(
-            "service_t6pezzm",
-            "template_av3tazf",
-            { user_name: session?.user?.name, user_email: session?.user?.email },
-            "T_CtaUa1Ssex2XazV"
-        )
-            .then((response) => {
-                console.log("Email sent successfully:", response);
-            })
-            .catch((error) => {
-                console.error("Error sending email:", error);
-            });
     }
 
     return (

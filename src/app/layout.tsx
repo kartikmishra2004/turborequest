@@ -7,6 +7,7 @@ import { auth } from "@/auth";
 import FooterWrapper from "@/components/ui/footer-wrapper";
 import { AuthProvider } from "@/context/authContext";
 import { TooltipProvider } from "@/components/ui/tooltip"
+import SendMail from "./components/Extras/SendMail";
 
 export const metadata: Metadata = {
   title: "Turbo Request – The Ultimate API Testing Tool",
@@ -23,6 +24,7 @@ export default async function RootLayout({ children }: Readonly<{ children: Reac
             <TooltipProvider>
               <main className='hidden md:block'>
                 <Navbar session={session} />
+                <SendMail />
                 {children}
                 <FooterWrapper />
               </main>
