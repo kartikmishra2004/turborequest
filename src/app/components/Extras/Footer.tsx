@@ -15,31 +15,6 @@ export default function Footer() {
                 </div>
                 <div className="grid flex-1 grid-cols-2 gap-12 sm:grid-cols-3">
                     <div className="space-y-4">
-                        <h3 className="text-sm font-medium">Docs</h3>
-                        <ul className="space-y-3 text-sm">
-                            <li>
-                                <Link href="/docs/api" className="text-muted-foreground transition-colors hover:text-primary">
-                                    What is API?
-                                </Link>
-                            </li>
-                            <li>
-                                <Link href="/docs/rest-api" className="text-muted-foreground transition-colors hover:text-primary">
-                                    REST API
-                                </Link>
-                            </li>
-                            <li>
-                                <Link href="/docs/graphql" className="text-muted-foreground transition-colors hover:text-primary">
-                                    GraphQL
-                                </Link>
-                            </li>
-                            <li>
-                                <Link href="/docs/websocket" className="text-muted-foreground transition-colors hover:text-primary">
-                                    WebSocket
-                                </Link>
-                            </li>
-                        </ul>
-                    </div>
-                    <div className="space-y-4">
                         <h3 className="text-sm font-medium">Company</h3>
                         <ul className="space-y-3 text-sm">
                             <li>
