@@ -12,6 +12,7 @@ type Props = {
     setResponse: (params: string) => void;
     formData: FormData;
     setIsOpen: (params: boolean) => void;
+    setRespStatus: (param: number | null) => void;
 };
 
 const Sidebar: React.FC<Props> = ({
@@ -23,6 +24,7 @@ const Sidebar: React.FC<Props> = ({
     loading,
     userData,
     setIsOpen,
+    setRespStatus,
 }) => {
     const [openCollections, setOpenCollections] = useState<Record<string, boolean>>(() => {
         if (typeof window !== "undefined") {
@@ -50,6 +52,7 @@ const Sidebar: React.FC<Props> = ({
             setResponse(`{
     "message": "Your response will appear here!!"
 }`);
+            setRespStatus(null);
         }
     };
 
