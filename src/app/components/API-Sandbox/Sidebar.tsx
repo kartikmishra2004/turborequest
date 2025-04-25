@@ -115,8 +115,6 @@ const Sidebar: React.FC<Props> = ({
                                                     } rounded-sm cursor-pointer text-sm transition-colors duration-200`}
                                             >
                                                 {request.type === 'http' && <FileJson className={`h-4 w-4 shrink-0 ${request.method === "GET" ? 'text-green-400' : ''} ${request.method === "POST" ? 'text-blue-400' : ''} ${request.method === "PUT" ? 'text-yellow-400' : ''} ${request.method === "DELETE" ? 'text-red-400' : ''}`} />}
-                                                {request.type === 'graphql' && <Network className="h-4 w-4 shrink-0" />}
-                                                {request.type === 'ws' && <Plug2 className="h-4 w-4 shrink-0" />}
                                                 {" "}
                                                 {request.name.length > 15 ? request.name.slice(0, 15) + "..." : request.name}
                                             </div>

@@ -20,7 +20,7 @@ export default function Hero() {
                     <FlipWords words={words} />
                 </h1>
                 <p className="mt-10 font-normal text-base text-muted-foreground max-w-lg text-center mx-auto">
-                    Supercharge your API development with TurboRequest – a fast, intuitive testing platform to send, debug, and automate REST, GraphQL, and WebSocket requests.
+                    Supercharge your API development with TurboRequest – a fast, intuitive testing platform to send, debug, and automate REST requests.
                 </p>
                 <div className="flex justify-center pt-10 space-x-5">
                     <Link href='/api-sandbox'>

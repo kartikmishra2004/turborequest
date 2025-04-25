@@ -21,7 +21,7 @@ export default function WelcomeBar() {
             <AlertDescription className="text-sm flex items-center gap-2 text-secondary-foreground">
               <span className="font-semibold text-foreground/80">Welcome!</span>
               <span className="text-muted-foreground lg:text-sm text-xs">
-                Test, monitor, and document your APIs with our enhanced platform. Try our new GraphQL support!
+                Test, monitor, and document your APIs with our enhanced platform!
               </span>
             </AlertDescription>
           </div>

@@ -7,8 +7,6 @@ export const METHODS = [
 
 export const PROTOCOLS = [
   { value: "http", label: "HTTP" },
-  { value: "ws", label: "WebSocket" },
-  { value: "graphql", label: "GraphQL" },
 ];
 
 export const sampleResponse = `{
